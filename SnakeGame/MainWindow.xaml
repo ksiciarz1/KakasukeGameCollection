@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SnakeGame"
         mc:Ignorable="d"
-        Title="MainWindow" Height="720" Width="720" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
-    <Grid>
-        <Grid VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" Height="20">
+        Title="MainWindow" Height="720" Width="720" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" KeyDown="KeyDownEvent">
+    <Grid KeyDown="KeyDownEvent">
+        <Grid VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" Height="20" KeyDown="KeyDownEvent">
             <Button x:Name="ExitButton" Content="Exit" HorizontalAlignment="Left" VerticalAlignment="Center" Width="40" Click="CloseButton_Click" Height="20" Background="#FFDDDDDD" BorderBrush="#FF170202" Margin="680,0,0,0"/>
             <Button x:Name="FullscreenButton" Content="Fullscreen" HorizontalAlignment="Right" Margin="0,0,40,0" VerticalAlignment="Top" Click="FullscreenButton_Click" Background="#FFDDDDDD" BorderBrush="#FF170202"/>
-            <Button x:Name="MinimizeButton" Content="Minimize" Margin="560,0,0,0" VerticalAlignment="Center" Click="MinimizeButton_Click" Background="#FFDDDDDD" BorderBrush="#FF170202" HorizontalAlignment="Left" RenderTransformOrigin="0.5,0.5" Width="63">
+            <Button x:Name="MinimizeButton" Content="Minimize" Margin="0,0,97,0" VerticalAlignment="Center" Click="MinimizeButton_Click" Background="#FFDDDDDD" BorderBrush="#FF170202" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Right" Width="63">
                 <Button.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform ScaleX="1"/>
@@ -21,7 +21,7 @@
                 </Button.RenderTransform>
             </Button>
         </Grid>
-        <Grid x:Name="MainGameGrid" Margin="0,20,0,0">
+        <Grid x:Name="MainGameGrid" Margin="0,20,0,0" KeyDown="KeyDownEvent">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>

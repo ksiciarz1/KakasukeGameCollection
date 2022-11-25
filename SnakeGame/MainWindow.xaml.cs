@@ -51,6 +51,24 @@ namespace SnakeGame
 
         private void StartGame()
         {
+            // Green checkerboard for visuals
+            for (int i = 0; i < 16; i++)
+            {
+                for (int j = 0; j < 16; j++)
+                {
+                    Rectangle rec = new Rectangle();
+                    if ((i + j) % 2 == 0)
+                        rec.Fill = Brushes.Green;
+                    else
+                        rec.Fill = Brushes.DarkGreen;
+
+                    MainGameGrid.Children.Add(rec);
+                    rec.SetValue(Grid.ColumnProperty, i);
+                    rec.SetValue(Grid.RowProperty, j);
+                    rec.Visibility = Visibility.Visible;
+                }
+            }
+
             KeyValuePair<int, int> position = new KeyValuePair<int, int>(new Random().Next(2, 13), new Random().Next(2, 13));
             snake = new Snake(position, MainGameGrid);
 
@@ -66,7 +84,6 @@ namespace SnakeGame
             }
             Close();
         }
-
         private void FullscreenButton_Click(object sender, RoutedEventArgs e)
         {
             if (WindowState == WindowState.Maximized)
@@ -80,7 +97,6 @@ namespace SnakeGame
                 isFullscreen = true;
             }
         }
-
         private void MinimizeButton_Click(object sender, RoutedEventArgs e)
         {
             if (WindowState == WindowState.Minimized)
@@ -93,5 +109,8 @@ namespace SnakeGame
             else
                 WindowState = WindowState.Minimized;
         }
+
+        private void KeyDownEvent(object sender, KeyEventArgs e) => snake.KeyDownEvent(sender, e);
+
     }
 }

@@ -22,7 +22,8 @@ namespace SnakeGame
 
         public KeyValuePair<int, int> positionOnGrid;
         private SnakeImage SnakeImage = SnakeImage.Head;
-        public SnakeDirection SnakeDirection = SnakeDirection.Right;
+        private SnakeDirection snakeDirection = SnakeDirection.Right;
+        public SnakeDirection directionToChangeTo = SnakeDirection.Right;
 
         public SnakePart(KeyValuePair<int, int> positionOnGrid, Snake manager)
         {
@@ -46,6 +47,7 @@ namespace SnakeGame
             image.Width = size;
             image.Height = size;
             image.MinHeight = size;
+            // image.Stretch = Stretch.Fill;
             manager.GameGrid.Children.Add(image);
         }
         public SnakePart(KeyValuePair<int, int> positionOnGrid, Snake manager, SnakeImage snakeImage) : this(positionOnGrid, manager)
@@ -53,7 +55,39 @@ namespace SnakeGame
             SnakeImage = snakeImage;
         }
 
-        public void SetDirection(SnakeDirection direction) => SnakeDirection = direction;
+        public void SetDirection(SnakeDirection direction)
+        {
+            if (direction == SnakeDirection.Right && snakeDirection == SnakeDirection.Left)
+            {
+                return;
+            }
+            if (direction == SnakeDirection.Down && snakeDirection == SnakeDirection.Up)
+            {
+                return;
+            }
+            else if (direction + 2 == snakeDirection)
+            {
+                return;
+            }
+
+            directionToChangeTo = direction;
+            switch (snakeDirection)
+            {
+                case SnakeDirection.Left:
+                    image.RenderTransform = new RotateTransform(90, 45 / 2, 45 / 2);
+                    break;
+                case SnakeDirection.Up:
+                    image.RenderTransform = new RotateTransform(180, 45 / 2, 45 / 2);
+                    break;
+                case SnakeDirection.Right:
+                    image.RenderTransform = new RotateTransform(-90, 45 / 2, 45 / 2);
+                    break;
+                case SnakeDirection.Down:
+                    image.RenderTransform = new RotateTransform(0, 45 / 2, 45 / 2);
+                    break;
+            }
+        }
+
         public void SetImage(SnakeImage snakeImage)
         {
             SnakeImage = snakeImage;
@@ -89,13 +123,14 @@ namespace SnakeGame
         /// <returns>new position on grid</returns>
         public KeyValuePair<int, int> MoveOnTick()
         {
-            switch (SnakeDirection)
+            snakeDirection = directionToChangeTo;
+            switch (snakeDirection)
             {
                 case SnakeDirection.Left:
                     if (positionOnGrid.Key != 0)
                     {
                         positionOnGrid = new KeyValuePair<int, int>(positionOnGrid.Key - 1, positionOnGrid.Value);
-                        image.RenderTransform = new RotateTransform(90);
+                        image.RenderTransform = new RotateTransform(90, 45 / 2, 45 / 2);
                         break;
                     }
                     else
@@ -104,7 +139,7 @@ namespace SnakeGame
                     if (positionOnGrid.Value != 0)
                     {
                         positionOnGrid = new KeyValuePair<int, int>(positionOnGrid.Key, positionOnGrid.Value - 1);
-                        image.RenderTransform = new RotateTransform(180);
+                        image.RenderTransform = new RotateTransform(180, 45 / 2, 45 / 2);
                         break;
                     }
                     else
@@ -113,7 +148,7 @@ namespace SnakeGame
                     if (positionOnGrid.Key != 15)
                     {
                         positionOnGrid = new KeyValuePair<int, int>(positionOnGrid.Key + 1, positionOnGrid.Value);
-                        image.RenderTransform = new RotateTransform(-90);
+                        image.RenderTransform = new RotateTransform(-90, 45 / 2, 45 / 2);
                         break;
                     }
                     else
@@ -122,7 +157,7 @@ namespace SnakeGame
                     if (positionOnGrid.Value != 15)
                     {
                         positionOnGrid = new KeyValuePair<int, int>(positionOnGrid.Key, positionOnGrid.Value + 1);
-                        image.RenderTransform = new RotateTransform(0);
+                        image.RenderTransform = new RotateTransform(0, 45 / 2, 45 / 2);
                         break;
                     }
                     else
@@ -154,6 +189,7 @@ namespace SnakeGame
         Body,
         Tail
     }
+
     public class OutOfMapException : Exception
     {
         public OutOfMapException() : base() { }

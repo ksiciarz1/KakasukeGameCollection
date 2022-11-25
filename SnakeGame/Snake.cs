@@ -24,6 +24,7 @@ namespace SnakeGame
             SnakePart head = new SnakePart(startingPosition, this);
             head.SetDirection(SnakeDirection.Right);
             parts.Add(head);
+            gameGrid.KeyDown += KeyDownEvent;
         }
 
         public void AddPart()
@@ -33,7 +34,7 @@ namespace SnakeGame
             parts.Add(new SnakePart(parts.Last().positionOnGrid, this, SnakeImage.Tail));
         }
 
-        public void SetHeadDirection(SnakeDirection direction) => parts[0].SnakeDirection = direction; // From keyboard
+        public void SetHeadDirection(SnakeDirection direction) => parts[0].directionToChangeTo = direction; // From keyboard
 
         /// <summary>
         /// One tick of Game Loop
@@ -43,18 +44,18 @@ namespace SnakeGame
             SnakeMovement();
         }
 
-        private void SnakeMovement() // TODO: snake parts can (shouldn't) be in the same place at the edge of grid
+        private void SnakeMovement() // TODO: snake parts can (shouldn't) be in the same place
         {
             for (int i = 0; i < parts.Count; i++)
             {
                 if (i != 0) // skip head bcs head changes direction based on keyboard input
-                    parts[i].SnakeDirection = GetDirectionToPreviousPart(i);
-            }
-            for (int i = 0; i < parts.Count; i++) // Keep seperate to get dircetion of all parts before moving any
+                    parts[i].directionToChangeTo = GetDirectionToPreviousPart(i);
+            } // keep loops seperate - all parts need the correct direction before any moves
+            foreach (SnakePart snakepart in parts)
             {
                 try
                 {
-                    parts[i].MoveOnTick();
+                    snakepart.MoveOnTick();
                 }
                 catch (Exception ex) when (ex is OutOfMapException || ex is PartsCollisionException)
                 {
@@ -65,6 +66,7 @@ namespace SnakeGame
                     }
                     parts.Clear();
                     StopGameLoop();
+                    break;
                 }
             }
         }
@@ -95,15 +97,6 @@ namespace SnakeGame
             }
         }
 
-        void StopGameLoop() { running = false; }
-
-        public void StartGameLoop()
-        {
-            running = true;
-            AddPart();
-            GameLoop();
-        }
-
         private async void GameLoop()
         {
             while (running)
@@ -112,6 +105,16 @@ namespace SnakeGame
                 await Task.Delay(512); // 8 for 60FPS
             }
         }
+        public void StartGameLoop()
+        {
+            running = true;
+            AddPart();
+            AddPart();
+            AddPart();
+            AddPart();
+            GameLoop();
+        }
+        void StopGameLoop() { running = false; }
 
         public void setGridPosition(Image image, KeyValuePair<int, int> position)
         {
@@ -119,5 +122,30 @@ namespace SnakeGame
             image.SetValue(Grid.RowProperty, position.Value);
         }
 
+        /// <summary>
+        /// Keyboard controls. Changes the snake head direction based on input
+        /// </summary>
+        public void KeyDownEvent(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case (System.Windows.Input.Key.W):
+                case (System.Windows.Input.Key.Up):
+                    parts[0].SetDirection(SnakeDirection.Up);
+                    break;
+                case (System.Windows.Input.Key.D):
+                case (System.Windows.Input.Key.Right):
+                    parts[0].SetDirection(SnakeDirection.Right);
+                    break;
+                case (System.Windows.Input.Key.S):
+                case (System.Windows.Input.Key.Down):
+                    parts[0].SetDirection(SnakeDirection.Down);
+                    break;
+                case (System.Windows.Input.Key.A):
+                case (System.Windows.Input.Key.Left):
+                    parts[0].SetDirection(SnakeDirection.Left);
+                    break;
+            }
+        }
     }
 }
