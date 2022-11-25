@@ -9,16 +9,19 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Xml;
 
 namespace SnakeGame
 {
     internal class SnakePart
     {
-        public KeyValuePair<int, int> positionOnGrid;
-        private Snake manager;
+        // manager of all snake parts
+        private readonly Snake manager;
+        // Visual aspect of this part also wpf element that has to be moved on grid
         private Image image;
 
-        public SnakeImage SnakeImage = SnakeImage.Head;
+        public KeyValuePair<int, int> positionOnGrid;
+        private SnakeImage SnakeImage = SnakeImage.Head;
         public SnakeDirection SnakeDirection = SnakeDirection.Right;
 
         public SnakePart(KeyValuePair<int, int> positionOnGrid, Snake manager)
@@ -26,7 +29,23 @@ namespace SnakeGame
             this.positionOnGrid = positionOnGrid;
             this.manager = manager;
             image = new Image();
-            image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/SnakeHead.png")));
+            switch (SnakeImage)
+            {
+                case SnakeImage.Head:
+                    image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/SnakeHead.png")));
+                    break;
+                case SnakeImage.Body:
+                    image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/SnakeHead.png"))); // TODO: Change that
+                    break;
+                case SnakeImage.Tail:
+                    image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/SnakeHead.png"))); // TODO: Change that
+                    break;
+            }
+            const int size = 45;
+            image.MinWidth = size;
+            image.Width = size;
+            image.Height = size;
+            image.MinHeight = size;
             manager.GameGrid.Children.Add(image);
         }
         public SnakePart(KeyValuePair<int, int> positionOnGrid, Snake manager, SnakeImage snakeImage) : this(positionOnGrid, manager)
@@ -35,7 +54,22 @@ namespace SnakeGame
         }
 
         public void SetDirection(SnakeDirection direction) => SnakeDirection = direction;
-        public void SetImage(SnakeImage snakeImage) => SnakeImage = snakeImage;
+        public void SetImage(SnakeImage snakeImage)
+        {
+            SnakeImage = snakeImage;
+            switch (SnakeImage)
+            {
+                case SnakeImage.Head:
+                    image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/SnakeHead.png")));
+                    break;
+                case SnakeImage.Body:
+                    image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/SnakeHead.png"))); // TODO: Change that
+                    break;
+                case SnakeImage.Tail:
+                    image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/SnakeHead.png"))); // TODO: Change that
+                    break;
+            }
+        }
 
         public KeyValuePair<int, int> ChangeGridPosition(int x, int y) => ChangeGridPosition(new KeyValuePair<int, int>(x, y));
         public KeyValuePair<int, int> ChangeGridPosition(KeyValuePair<int, int> positionOnGrid)
@@ -49,7 +83,6 @@ namespace SnakeGame
             return positionOnGrid;
         }
 
-
         /// <summary>
         /// Move this part based on it's direction
         /// </summary>
@@ -62,38 +95,49 @@ namespace SnakeGame
                     if (positionOnGrid.Key != 0)
                     {
                         positionOnGrid = new KeyValuePair<int, int>(positionOnGrid.Key - 1, positionOnGrid.Value);
+                        image.RenderTransform = new RotateTransform(90);
                         break;
                     }
-                    // Error out of map
-                    break;
+                    else
+                        throw new OutOfMapException();
                 case SnakeDirection.Up:
                     if (positionOnGrid.Value != 0)
                     {
                         positionOnGrid = new KeyValuePair<int, int>(positionOnGrid.Key, positionOnGrid.Value - 1);
+                        image.RenderTransform = new RotateTransform(180);
                         break;
                     }
-                    // Error out of map
-                    break;
+                    else
+                        throw new OutOfMapException();
                 case SnakeDirection.Right:
                     if (positionOnGrid.Key != 15)
                     {
                         positionOnGrid = new KeyValuePair<int, int>(positionOnGrid.Key + 1, positionOnGrid.Value);
+                        image.RenderTransform = new RotateTransform(-90);
                         break;
                     }
-                    // Error out of map
-                    break;
+                    else
+                        throw new OutOfMapException();
                 case SnakeDirection.Down:
                     if (positionOnGrid.Value != 15)
                     {
                         positionOnGrid = new KeyValuePair<int, int>(positionOnGrid.Key, positionOnGrid.Value + 1);
+                        image.RenderTransform = new RotateTransform(0);
                         break;
                     }
-                    // Error out of map
-                    break;
+                    else
+                        throw new OutOfMapException();
             }
             ChangeGridPosition();
             return positionOnGrid;
         }
+
+        public void Delete()
+        {
+            image.Source = null;
+            image = null;
+        }
+
     }
 
     public enum SnakeDirection
@@ -109,5 +153,13 @@ namespace SnakeGame
         Head,
         Body,
         Tail
+    }
+    public class OutOfMapException : Exception
+    {
+        public OutOfMapException() : base() { }
+    }
+    public class PartsCollisionException : Exception
+    {
+        public PartsCollisionException() : base() { }
     }
 }

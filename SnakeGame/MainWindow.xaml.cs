@@ -59,8 +59,11 @@ namespace SnakeGame
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            parent.Visibility = Visibility.Visible; // Bring up the main window for game select before closing this window
-            parent.Focus();
+            if (parent != null) // HACK
+            {
+                parent.Visibility = Visibility.Visible; // Bring up the main window for game select before closing this window
+                parent.Focus();
+            }
             Close();
         }
 
