@@ -4,21 +4,30 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Documents;
 
 namespace SnakeGame
 {
     internal class Snake
     {
-        List<SnakePart> parts = new List<SnakePart>();
+        private List<SnakePart> parts = new List<SnakePart>();
+        public Grid GameGrid { get => gameGrid; }
+        private Grid gameGrid;
+        public bool Running { get => running; }
+        private bool running = false;
 
-        public Snake(KeyValuePair<int, int> startingPosition)
+        public Snake(KeyValuePair<int, int> startingPosition, Grid gameGrid)
         {
-            parts.Add(new SnakePart(startingPosition));
+            this.gameGrid = gameGrid;
+            SnakePart head = new SnakePart(startingPosition, this);
+            head.SetDirection(SnakeDirection.Right);
+            parts.Add(head);
         }
 
         public void AddPart()
         {
-            parts.Add(new SnakePart(parts.Last().positionOnGrid));
+            parts.Add(new SnakePart(parts.Last().positionOnGrid, this));
         }
 
         public void SetHeadDirection(SnakeDirection direction) => parts[0].SnakeDirection = direction; // From keyboard
@@ -29,7 +38,7 @@ namespace SnakeGame
             {
                 if (i != 0) // skip head
                     parts[i].SnakeDirection = GetDirectionToPreviousPart(i);
-                parts[i].MovedOnTick();
+                parts[i].MoveOnTick();
             }
         }
 
@@ -47,16 +56,40 @@ namespace SnakeGame
                 // Parts are in the same place
                 return SnakeDirection.None;
             }
-            else if (xDiff == 0) // if previous part is lower on the grid the diff will be positive
+            else if (xDiff == 0) // if previous part is lower on the grid the diff will be negative
             {
-                if (yDiff > 0) return SnakeDirection.Down;
+                if (yDiff < 0) return SnakeDirection.Down;
                 else return SnakeDirection.Up;
             }
-            else // if previous part is on right on the grid the diff will be positive
+            else // if previous part is on right on the grid the diff will be negative
             {
-                if (xDiff > 0) return SnakeDirection.Right;
+                if (xDiff < 0) return SnakeDirection.Right;
                 else return SnakeDirection.Left;
             }
         }
+
+        void StopGameLoop() { running = false; }
+
+        public void StartGameLoop()
+        {
+            running = true;
+            GameLoop();
+        }
+
+        private async void GameLoop()
+        {
+            while (running)
+            {
+                Tick();
+                await Task.Delay(512); // 8 for 60FPS
+            }
+        }
+
+        public void setGridPosition(Image image, KeyValuePair<int, int> position)
+        {
+            image.SetValue(Grid.ColumnProperty, position.Key);
+            image.SetValue(Grid.RowProperty, position.Value);
+        }
+
     }
 }

@@ -22,8 +22,19 @@ namespace SnakeGame
     {
         bool isFullscreen;
         readonly Window parent; // Main window with game select
+        Snake? snake;
+        public bool running = true; // running game loop
 
-
+        public MainWindow()
+        {
+            InitializeComponent();
+            if (WindowState == WindowState.Maximized || WindowState == WindowState.Minimized) // TODO: Make this load up and save up, with resolution in settings
+                isFullscreen = true;
+            else
+                isFullscreen = false;
+            Focus();
+            StartGame();
+        }
         public MainWindow(Window parent)
         {
             this.parent = parent;
@@ -35,12 +46,15 @@ namespace SnakeGame
 
             Visibility = Visibility.Visible;
             Focus();
-
+            StartGame();
         }
 
         private void StartGame()
         {
+            KeyValuePair<int, int> position = new KeyValuePair<int, int>(new Random().Next(2, 13), new Random().Next(2, 13));
+            snake = new Snake(position, MainGameGrid);
 
+            snake.StartGameLoop();
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
