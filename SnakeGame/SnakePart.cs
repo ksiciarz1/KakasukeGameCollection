@@ -19,6 +19,7 @@ namespace SnakeGame
         private readonly Snake manager;
         // Visual aspect of this part also wpf element that has to be moved on grid
         private Image image;
+        private bool collisionEnabled = false;
 
         public KeyValuePair<int, int> positionOnGrid;
         private SnakeImage SnakeImage = SnakeImage.Tail;
@@ -182,6 +183,7 @@ namespace SnakeGame
         Down,
         None
     }
+    // TODO: Add turning images
     public enum SnakeImage
     {
         Head,

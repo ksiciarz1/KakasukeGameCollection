@@ -14,7 +14,7 @@ namespace SnakeGame
     {
         private List<SnakePart> parts = new List<SnakePart>(); // Parts of snake including head, body and tail
         public Grid GameGrid { get => gameGrid; }
-        private Grid gameGrid;
+        private readonly Grid gameGrid;
         public bool Running { get => running; }
         private bool running = false;
 
@@ -34,43 +34,6 @@ namespace SnakeGame
             else
                 parts.Last().SetImage(SnakeImage.Body);
             parts.Add(new SnakePart(parts.Last().positionOnGrid, this, SnakeImage.Tail));
-        }
-
-        public void SetHeadDirection(SnakeDirection direction) => parts[0].directionToChangeTo = direction; // From keyboard
-
-        /// <summary>
-        /// One tick of Game Loop
-        /// </summary>
-        public void Tick()
-        {
-            SnakeMovement();
-        }
-
-        private void SnakeMovement() // TODO: snake parts can (shouldn't) be in the same place
-        {
-            for (int i = 0; i < parts.Count; i++)
-            {
-                if (i != 0) // skip head bcs head changes direction based on keyboard input
-                    parts[i].directionToChangeTo = GetDirectionToPreviousPart(i);
-            } // keep loops seperate - all parts need the correct direction before any moves
-            foreach (SnakePart snakepart in parts)
-            {
-                try
-                {
-                    snakepart.MoveOnTick();
-                }
-                catch (Exception ex) when (ex is OutOfMapException || ex is PartsCollisionException)
-                {
-                    // TODO: Game Over
-                    foreach (SnakePart snakePart in parts)
-                    {
-                        snakePart.Delete();
-                    }
-                    parts.Clear();
-                    StopGameLoop();
-                    break;
-                }
-            }
         }
 
         /// <summary>
@@ -98,7 +61,60 @@ namespace SnakeGame
                 else return SnakeDirection.Left;
             }
         }
+        public void SetHeadDirection(SnakeDirection direction) => parts[0].directionToChangeTo = direction; // From keyboard
+        private void SnakeMovement()
+        {
+            for (int i = 0; i < parts.Count; i++)
+            {
+                if (i != 0) // skip head bcs head changes direction based on keyboard input
+                    parts[i].directionToChangeTo = GetDirectionToPreviousPart(i);
+            } // keep loops seperate - all parts need the correct direction before any moves
+            foreach (SnakePart snakepart in parts)
+            {
+                try
+                {
+                    snakepart.MoveOnTick();
+                }
+                catch (Exception ex) when (ex is OutOfMapException || ex is PartsCollisionException)
+                {
+                    // TODO: Better Game Over
+                    GameOver();
+                    break;
+                }
+            }
+            // Check if snake parts are coliding by checking if they have the same grid position
+            KeyValuePair<int, int>[] snakePartsPositions = new KeyValuePair<int, int>[parts.Count];
+            for (int i = 0; i < parts.Count; i++)
+            {
+                snakePartsPositions[i] = parts[i].positionOnGrid;
+            }
+            var duplicates = snakePartsPositions.GroupBy(x => x) // Group by positions
+                .Where(g => g.Count() > 1) // When same position is occuring more than once
+                .ToArray();
+            if (duplicates.Length > 0)
+                GameOver();
+        }
 
+        /// <summary>
+        /// One tick of Game Loop
+        /// </summary>
+        public void Tick()
+        {
+            SnakeMovement();
+        }
+
+        public void setGridPosition(Image image, KeyValuePair<int, int> position)
+        {
+            image.SetValue(Grid.ColumnProperty, position.Key);
+            image.SetValue(Grid.RowProperty, position.Value);
+        }
+
+        public void StartGameLoop()
+        {
+            running = true;
+            AddPart();
+            GameLoop();
+        }
         private async void GameLoop()
         {
             while (running)
@@ -107,22 +123,16 @@ namespace SnakeGame
                 await Task.Delay(512); // 8 for 60FPS
             }
         }
-        public void StartGameLoop()
+        private void GameOver()
         {
-            running = true;
-            AddPart();
-            AddPart();
-            AddPart();
-            AddPart();
-            GameLoop();
+            foreach (SnakePart snakePart in parts)
+            {
+                snakePart.Delete();
+            }
+            parts.Clear();
+            StopGameLoop();
         }
         void StopGameLoop() { running = false; }
-
-        public void setGridPosition(Image image, KeyValuePair<int, int> position)
-        {
-            image.SetValue(Grid.ColumnProperty, position.Key);
-            image.SetValue(Grid.RowProperty, position.Value);
-        }
 
         /// <summary>
         /// Keyboard controls. Changes the snake head direction based on input
@@ -131,21 +141,24 @@ namespace SnakeGame
         {
             switch (e.Key)
             {
-                case (System.Windows.Input.Key.W):
-                case (System.Windows.Input.Key.Up):
+                case System.Windows.Input.Key.W:
+                case System.Windows.Input.Key.Up:
                     parts[0].SetDirection(SnakeDirection.Up);
                     break;
-                case (System.Windows.Input.Key.D):
-                case (System.Windows.Input.Key.Right):
+                case System.Windows.Input.Key.D:
+                case System.Windows.Input.Key.Right:
                     parts[0].SetDirection(SnakeDirection.Right);
                     break;
-                case (System.Windows.Input.Key.S):
-                case (System.Windows.Input.Key.Down):
+                case System.Windows.Input.Key.S:
+                case System.Windows.Input.Key.Down:
                     parts[0].SetDirection(SnakeDirection.Down);
                     break;
-                case (System.Windows.Input.Key.A):
-                case (System.Windows.Input.Key.Left):
+                case System.Windows.Input.Key.A:
+                case System.Windows.Input.Key.Left:
                     parts[0].SetDirection(SnakeDirection.Left);
+                    break;
+                case System.Windows.Input.Key.E: // HACK
+                    AddPart();
                     break;
             }
         }
