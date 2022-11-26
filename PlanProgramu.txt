@@ -1,2 +1,7 @@
 Snake:
 	grid 16x16
+	TODO:
+		normal control border icons
+		logic for changing visuals when snake is turning
+		object to grow up snake
+		visuals for that object
