@@ -29,7 +29,9 @@ namespace SnakeGame
 
         public void AddPart()
         {
-            if (parts.Count != 1) // Don't change head to body upon adding new part
+            if (parts.Count == 1) // Don't change head to body upon adding new part
+                parts.Last().SetImage(SnakeImage.Head);
+            else
                 parts.Last().SetImage(SnakeImage.Body);
             parts.Add(new SnakePart(parts.Last().positionOnGrid, this, SnakeImage.Tail));
         }

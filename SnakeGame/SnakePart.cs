@@ -21,7 +21,7 @@ namespace SnakeGame
         private Image image;
 
         public KeyValuePair<int, int> positionOnGrid;
-        private SnakeImage SnakeImage = SnakeImage.Head;
+        private SnakeImage SnakeImage = SnakeImage.Tail;
         private SnakeDirection snakeDirection = SnakeDirection.Right;
         public SnakeDirection directionToChangeTo = SnakeDirection.Right;
 
@@ -36,10 +36,10 @@ namespace SnakeGame
                     image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/SnakeHead.png")));
                     break;
                 case SnakeImage.Body:
-                    image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/SnakeHead.png"))); // TODO: Change that
+                    image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/SnakeBody.png")));
                     break;
                 case SnakeImage.Tail:
-                    image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/SnakeHead.png"))); // TODO: Change that
+                    image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/SnakeTail.png")));
                     break;
             }
             const int size = 45;
@@ -87,7 +87,6 @@ namespace SnakeGame
                     break;
             }
         }
-
         public void SetImage(SnakeImage snakeImage)
         {
             SnakeImage = snakeImage;
@@ -97,10 +96,10 @@ namespace SnakeGame
                     image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/SnakeHead.png")));
                     break;
                 case SnakeImage.Body:
-                    image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/SnakeHead.png"))); // TODO: Change that
+                    image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/SnakeBody.png")));
                     break;
                 case SnakeImage.Tail:
-                    image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/SnakeHead.png"))); // TODO: Change that
+                    image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/SnakeTail.png")));
                     break;
             }
         }
