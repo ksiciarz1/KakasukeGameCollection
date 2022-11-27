@@ -68,7 +68,46 @@ namespace SnakeGame
             {
                 if (i != 0) // skip head bcs head changes direction based on keyboard input
                     parts[i].directionToChangeTo = GetDirectionToPreviousPart(i);
-            } // keep loops seperate - all parts need the correct direction before any moves
+            }
+
+            // Changing snake image if snake is turning
+            for (int i = 1; i < parts.Count - 1; i++)
+            {
+                if (parts[i - 1].directionToChangeTo != parts[i].directionToChangeTo && parts[i].directionToChangeTo != SnakeDirection.None)
+                {
+                    switch (parts[i].directionToChangeTo)
+                    {
+                        case SnakeDirection.Left:
+                            if (parts[i - 1].directionToChangeTo == SnakeDirection.Down)
+                                parts[i].SetImage(SnakeImage.TurnRight);
+                            else
+                                parts[i].SetImage(SnakeImage.TurnLeft);
+                            break;
+                        case SnakeDirection.Up:
+                            if (parts[i - 1].directionToChangeTo == SnakeDirection.Left)
+                                parts[i].SetImage(SnakeImage.TurnRight);
+                            else
+                                parts[i].SetImage(SnakeImage.TurnLeft);
+                            break;
+                        case SnakeDirection.Right:
+                            if (parts[i - 1].directionToChangeTo == SnakeDirection.Up)
+                                parts[i].SetImage(SnakeImage.TurnRight);
+                            else
+                                parts[i].SetImage(SnakeImage.TurnLeft);
+                            break;
+                        case SnakeDirection.Down:
+                            if (parts[i - 1].directionToChangeTo == SnakeDirection.Right)
+                                parts[i].SetImage(SnakeImage.TurnRight);
+                            else
+                                parts[i].SetImage(SnakeImage.TurnLeft);
+                            break;
+                    }
+                }
+                else
+                    parts[i].SetImage(SnakeImage.Body);
+            }
+
+            // Keep loops seperate - all parts need the correct direction before any moves
             foreach (SnakePart snakepart in parts)
             {
                 try
@@ -82,6 +121,7 @@ namespace SnakeGame
                     break;
                 }
             }
+
             // Check if snake parts are coliding by checking if they have the same grid position
             KeyValuePair<int, int>[] snakePartsPositions = new KeyValuePair<int, int>[parts.Count];
             for (int i = 0; i < parts.Count; i++)
@@ -94,6 +134,7 @@ namespace SnakeGame
             if (duplicates.Length > 0)
                 GameOver();
         }
+
 
         /// <summary>
         /// One tick of Game Loop

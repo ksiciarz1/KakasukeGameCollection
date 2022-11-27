@@ -102,6 +102,13 @@ namespace SnakeGame
                 case SnakeImage.Tail:
                     image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/SnakeTail.png")));
                     break;
+                case SnakeImage.TurnLeft:
+                    image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/SnakeTurnLeft.png")));
+                    break;
+                case SnakeImage.TurnRight:
+                    image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/SnakeTurnRight.png")));
+                    break;
+
             }
         }
 
@@ -183,12 +190,13 @@ namespace SnakeGame
         Down,
         None
     }
-    // TODO: Add turning images
     public enum SnakeImage
     {
         Head,
         Body,
-        Tail
+        Tail,
+        TurnLeft,
+        TurnRight
     }
 
     public class OutOfMapException : Exception
