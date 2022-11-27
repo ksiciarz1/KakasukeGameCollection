@@ -21,8 +21,9 @@ namespace SnakeGame
     public partial class SnakeWindow : Window
     {
         bool isFullscreen;
-        readonly Window parent; // Main window with game select
-        Snake snake;
+        private readonly Window parent; // Main window with game select
+        private Snake snake;
+        private int score = 0;
         public bool running = true; // running game loop
 
         public SnakeWindow() : this(new Window()) { } // HACK
@@ -62,10 +63,14 @@ namespace SnakeGame
 
             KeyValuePair<int, int> position = new KeyValuePair<int, int>(new Random().Next(2, 13), new Random().Next(2, 13));
             snake = new Snake(position, MainGameGrid);
-
-            snake.StartGameLoop();
+            snake.scoreAdded += Snake_scoreAdded;
         }
 
+        private void Snake_scoreAdded()
+        {
+            score += 100;
+            ScoreLabel.Content = "Score: " + score;
+        }
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             if (parent != null) // HACK
@@ -100,8 +105,6 @@ namespace SnakeGame
             else
                 WindowState = WindowState.Minimized;
         }
-
         private void OnKeyDownEvent(object sender, KeyEventArgs e) => snake.KeyDownEvent(sender, e);
-
     }
 }

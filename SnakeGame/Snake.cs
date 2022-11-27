@@ -18,7 +18,7 @@ namespace SnakeGame
         public bool Running { get => running; }
         private bool running = false;
         private Apple apple;
-        private int score = 0;
+        public event ScoreAdded scoreAdded;
 
         public Snake(KeyValuePair<int, int> startingPosition, Grid gameGrid)
         {
@@ -27,6 +27,7 @@ namespace SnakeGame
             head.SetDirection(SnakeDirection.Right);
             parts.Add(head);
             gameGrid.KeyDown += KeyDownEvent;
+            StartGameLoop();
         }
 
         public void AddPart()
@@ -144,9 +145,10 @@ namespace SnakeGame
         public void Tick()
         {
             SnakeMovement();
-            if (parts[0].positionOnGrid.Key == apple.positionOnGrid.Key
-                && parts[0].positionOnGrid.Value == apple.positionOnGrid.Value)
-                AppleColided();
+            if (parts.Count > 0)
+                if (parts[0].positionOnGrid.Key == apple.positionOnGrid.Key
+                    && parts[0].positionOnGrid.Value == apple.positionOnGrid.Value)
+                    AppleColided();
         }
 
         public void setGridPosition(Image image, KeyValuePair<int, int> position)
@@ -155,7 +157,7 @@ namespace SnakeGame
             image.SetValue(Grid.RowProperty, position.Value);
         }
 
-        public void StartGameLoop()
+        private void StartGameLoop()
         {
             running = true;
             AddPart();
@@ -184,7 +186,7 @@ namespace SnakeGame
         private void AppleColided()
         {
             apple.SnakeCollided();
-            score += 100;
+            scoreAdded();
             AddPart();
             CreateApple();
         }
@@ -207,6 +209,8 @@ namespace SnakeGame
             StopGameLoop();
         }
         void StopGameLoop() { running = false; }
+
+        public delegate void ScoreAdded();
 
         /// <summary>
         /// Keyboard controls. Changes the snake head direction based on input
@@ -237,4 +241,5 @@ namespace SnakeGame
             }
         }
     }
+
 }
