@@ -17,6 +17,8 @@ namespace SnakeGame
         private readonly Grid gameGrid;
         public bool Running { get => running; }
         private bool running = false;
+        private Apple apple;
+        private int score = 0;
 
         public Snake(KeyValuePair<int, int> startingPosition, Grid gameGrid)
         {
@@ -142,6 +144,9 @@ namespace SnakeGame
         public void Tick()
         {
             SnakeMovement();
+            if (parts[0].positionOnGrid.Key == apple.positionOnGrid.Key
+                && parts[0].positionOnGrid.Value == apple.positionOnGrid.Value)
+                AppleColided();
         }
 
         public void setGridPosition(Image image, KeyValuePair<int, int> position)
@@ -154,8 +159,36 @@ namespace SnakeGame
         {
             running = true;
             AddPart();
+            CreateApple();
             GameLoop();
         }
+
+        private void CreateApple()
+        {
+            bool foundGoodPosition = false;
+            KeyValuePair<int, int> positionOngrid = new KeyValuePair<int, int>();
+            while (!foundGoodPosition)
+            {
+                foundGoodPosition = true;
+                Random rand = new Random();
+                positionOngrid = new KeyValuePair<int, int>(rand.Next(16), rand.Next(16));
+                foreach (SnakePart part in parts)
+                {
+                    if (part.positionOnGrid.Key == positionOngrid.Key
+                        && part.positionOnGrid.Value == positionOngrid.Value)
+                        foundGoodPosition = false;
+                }
+            }
+            apple = new Apple(positionOngrid, gameGrid);
+        }
+        private void AppleColided()
+        {
+            apple.SnakeCollided();
+            score += 100;
+            AddPart();
+            CreateApple();
+        }
+
         private async void GameLoop()
         {
             while (running)
