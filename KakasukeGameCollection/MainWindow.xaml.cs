@@ -20,22 +20,28 @@ namespace KakasukeGameCollection
     /// </summary>
     public partial class MainWindow : Window
     {
-        SnakeGame.MainWindow? SnakeGameWindow;
-        // SaperGame.MainWindow? SapperGameWindow;
-        // ChessGame.MainWindow? ChessGameWindow;
+        private SnakeGame.MainWindow? SnakeGameWindow;
+        // private SaperGame.MainWindow? SapperGameWindow;
+        // private ChessGame.MainWindow? ChessGameWindow;
 
         public MainWindow()
         {
             InitializeComponent();
         }
 
+
         private void SnakeButtonClick(object sender, RoutedEventArgs e)
         {
             if (SnakeGameWindow == null)
             {
                 SnakeGameWindow = new SnakeGame.MainWindow(this);
+                SnakeGameWindow.Closed += SnakeGameWindow_Closed;
                 Visibility = Visibility.Hidden;
             }
+        }
+        private void SnakeGameWindow_Closed(object? sender, EventArgs e)
+        {
+            SnakeGameWindow = null;
         }
     }
 }

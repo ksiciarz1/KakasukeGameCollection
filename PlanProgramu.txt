@@ -5,3 +5,5 @@ Snake:
 		logic for changing visuals when snake is turning
 		object to grow up snake
 		visuals for that object
+		score system
+		game over screen
