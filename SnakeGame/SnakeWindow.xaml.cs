@@ -18,15 +18,15 @@ namespace SnakeGame
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class SnakeWindow : Window
     {
         bool isFullscreen;
         readonly Window parent; // Main window with game select
         Snake snake;
         public bool running = true; // running game loop
 
-        public MainWindow() : this(new Window()) { } // HACK
-        public MainWindow(Window parent)
+        public SnakeWindow() : this(new Window()) { } // HACK
+        public SnakeWindow(Window parent)
         {
             this.parent = parent;
             InitializeComponent();

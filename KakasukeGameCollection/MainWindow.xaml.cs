@@ -20,7 +20,7 @@ namespace KakasukeGameCollection
     /// </summary>
     public partial class MainWindow : Window
     {
-        private SnakeGame.MainWindow? SnakeGameWindow;
+        private SnakeGame.SnakeWindow? SnakeGameWindow;
         // private SaperGame.MainWindow? SapperGameWindow;
         // private ChessGame.MainWindow? ChessGameWindow;
 
@@ -34,7 +34,7 @@ namespace KakasukeGameCollection
         {
             if (SnakeGameWindow == null)
             {
-                SnakeGameWindow = new SnakeGame.MainWindow(this);
+                SnakeGameWindow = new SnakeGame.SnakeWindow(this);
                 SnakeGameWindow.Closed += SnakeGameWindow_Closed;
                 Visibility = Visibility.Hidden;
             }
