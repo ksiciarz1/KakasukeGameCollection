@@ -271,9 +271,9 @@ namespace SnakeGame
                 case System.Windows.Input.Key.Left:
                     parts[0].SetDirection(SnakeDirection.Left);
                     break;
-                case System.Windows.Input.Key.E: // HACK
-                    AddPart();
-                    break;
+                //case System.Windows.Input.Key.E: // HACK
+                //    AddPart();
+                //    break;
             }
         }
     }

@@ -19,7 +19,6 @@ namespace SnakeGame
         private readonly Snake manager;
         // Visual aspect of this part also wpf element that has to be moved on grid
         private Image image;
-        private bool collisionEnabled = false;
 
         public KeyValuePair<int, int> positionOnGrid;
         private SnakeImage SnakeImage = SnakeImage.Tail;
@@ -44,11 +43,11 @@ namespace SnakeGame
                     break;
             }
             const int size = 45;
-            image.MinWidth = size;
-            image.Width = size;
-            image.Height = size;
-            image.MinHeight = size;
-            // image.Stretch = Stretch.Fill;
+            //image.MinWidth = size;
+            //image.Width = size;
+            //image.Height = size;
+            //image.MinHeight = size;
+            //image.Stretch = Stretch.Fill;
             manager.GameGrid.Children.Add(image);
         }
         public SnakePart(KeyValuePair<int, int> positionOnGrid, Snake manager, SnakeImage snakeImage) : this(positionOnGrid, manager)

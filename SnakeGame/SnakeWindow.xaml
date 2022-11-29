@@ -11,7 +11,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" Height="20" KeyDown="OnKeyDownEvent">
-            <Button x:Name="ExitButton" Content="Exit" HorizontalAlignment="Left" VerticalAlignment="Center" Width="40" Click="CloseButton_Click" Height="20" Background="#FFDDDDDD" BorderBrush="#FF170202" Margin="680,0,0,0"/>
+            <Button x:Name="ExitButton" Content="Exit" VerticalAlignment="Center" Width="40" Click="CloseButton_Click" Height="20" Background="#FFDDDDDD" BorderBrush="#FF170202" Margin="680,0,0,0" HorizontalAlignment="Right"/>
             <Button x:Name="FullscreenButton" Content="Fullscreen" HorizontalAlignment="Right" Margin="0,0,40,0" VerticalAlignment="Top" Click="FullscreenButton_Click" Background="#FFDDDDDD" BorderBrush="#FF170202"/>
             <Button x:Name="MinimizeButton" Content="Minimize" Margin="0,0,97,0" VerticalAlignment="Center" Click="MinimizeButton_Click" Background="#FFDDDDDD" BorderBrush="#FF170202" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Right" Width="63">
                 <Button.RenderTransform>
@@ -23,47 +23,9 @@
                     </TransformGroup>
                 </Button.RenderTransform>
             </Button>
-            <Label x:Name="ScoreLabel" Content="Score: 0" Margin="322,-3,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="ScoreLabel" Content="Score: 0" Margin="322,-3,346,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </Grid>
-        <Grid x:Name="MainGameGrid" Margin="0,20,0,0" KeyDown="OnKeyDownEvent">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-            </Grid.RowDefinitions>
-        </Grid>
-        <Grid x:Name="GameOverGrid" Margin="0,25,0,0" Background="#4C000000" d:IsHidden="True">
+        <Grid x:Name="GameOverGrid" Margin="0,20,0,0" Background="#4C000000" d:IsHidden="True">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
@@ -72,6 +34,46 @@
             <Label x:Name="GameOverScore" Content="Score: 0" HorizontalAlignment="Center" Margin="0,313,0,0" VerticalAlignment="Top" FontSize="16"/>
             <Button x:Name="PlayAgainButton" Content="Play Again" HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="1" VerticalAlignment="Top" Click="PlayAgainButton_Click"/>
         </Grid>
+        <Viewbox Margin="0,20,0,0">
+            <Grid x:Name="MainGameGrid" KeyDown="OnKeyDownEvent" Height="700" Width="720">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+            </Grid>
+        </Viewbox>
 
     </Grid>
 </Window>

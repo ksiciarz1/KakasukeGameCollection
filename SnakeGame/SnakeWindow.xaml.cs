@@ -24,9 +24,37 @@ namespace SnakeGame
         private readonly Window parent; // Main window with game select
         private Snake snake;
         private int score = 0;
-        public bool running = true; // running game loop
 
-        public SnakeWindow() : this(new Window()) { } // HACK
+        public SnakeWindow()
+        {
+            InitializeComponent();
+            if (WindowState == WindowState.Maximized || WindowState == WindowState.Minimized)
+                isFullscreen = true;
+            else
+                isFullscreen = false;
+
+            Visibility = Visibility.Visible;
+
+            // Green checkerboard for visuals
+            for (int i = 0; i < 16; i++)
+            {
+                for (int j = 0; j < 16; j++)
+                {
+                    Rectangle rec = new Rectangle();
+                    if ((i + j) % 2 == 0)
+                        rec.Fill = Brushes.Green;
+                    else
+                        rec.Fill = Brushes.DarkGreen;
+
+                    MainGameGrid.Children.Add(rec);
+                    rec.SetValue(Grid.ColumnProperty, i);
+                    rec.SetValue(Grid.RowProperty, j);
+                    rec.Visibility = Visibility.Visible;
+                }
+            }
+            Focus();
+            StartGame();
+        }
         public SnakeWindow(Window parent)
         {
             this.parent = parent;
@@ -76,16 +104,16 @@ namespace SnakeGame
             score = 0;
 
         }
-
         private void Snake_scoreAdded()
         {
             score += 100;
             ScoreLabel.Content = "Score: " + score;
         }
+
         private void PlayAgainButton_Click(object sender, RoutedEventArgs e) => StartGame();
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            if (parent != null) // HACK
+            if (parent != null)
             {
                 parent.Visibility = Visibility.Visible; // Bring up the main window for game select before closing this window
                 parent.Focus();
