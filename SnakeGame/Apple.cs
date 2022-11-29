@@ -31,5 +31,7 @@ namespace SnakeGame
             image.Source = null;
             image = null;
         }
+
+        public void Delete() => SnakeCollided();
     }
 }

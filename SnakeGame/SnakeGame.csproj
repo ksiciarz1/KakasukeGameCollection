@@ -20,6 +20,12 @@
     <None Update="Resources\SnakeTail.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Resources\SnakeTailTurnLeft.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\SnakeTailTurnRight.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Resources\SnakeTurnLeft.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

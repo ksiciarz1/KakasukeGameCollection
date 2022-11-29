@@ -18,7 +18,8 @@ namespace SnakeGame
         public bool Running { get => running; }
         private bool running = false;
         private Apple apple;
-        public event ScoreAdded scoreAdded;
+        public event ScoreAddedEvent OnScoreAdded;
+        public event GameOverEvent OnGameOver;
 
         public Snake(KeyValuePair<int, int> startingPosition, Grid gameGrid)
         {
@@ -109,6 +110,40 @@ namespace SnakeGame
                 else
                     parts[i].SetImage(SnakeImage.Body);
             }
+            // Tail Turning
+            int tailIndex = parts.Count - 1; // Tail
+            if (parts[tailIndex - 1].directionToChangeTo != parts[tailIndex].directionToChangeTo && parts[tailIndex].directionToChangeTo != SnakeDirection.None)
+            {
+                switch (parts[tailIndex].directionToChangeTo)
+                {
+                    case SnakeDirection.Left:
+                        if (parts[tailIndex - 1].directionToChangeTo == SnakeDirection.Down)
+                            parts[tailIndex].SetImage(SnakeImage.TailTurnRight);
+                        else
+                            parts[tailIndex].SetImage(SnakeImage.TailTurnLeft);
+                        break;
+                    case SnakeDirection.Up:
+                        if (parts[tailIndex - 1].directionToChangeTo == SnakeDirection.Left)
+                            parts[tailIndex].SetImage(SnakeImage.TailTurnRight);
+                        else
+                            parts[tailIndex].SetImage(SnakeImage.TailTurnLeft);
+                        break;
+                    case SnakeDirection.Right:
+                        if (parts[tailIndex - 1].directionToChangeTo == SnakeDirection.Up)
+                            parts[tailIndex].SetImage(SnakeImage.TailTurnRight);
+                        else
+                            parts[tailIndex].SetImage(SnakeImage.TailTurnLeft);
+                        break;
+                    case SnakeDirection.Down:
+                        if (parts[tailIndex - 1].directionToChangeTo == SnakeDirection.Right)
+                            parts[tailIndex].SetImage(SnakeImage.TailTurnRight);
+                        else
+                            parts[tailIndex].SetImage(SnakeImage.TailTurnLeft);
+                        break;
+                }
+            }
+            else
+                parts[tailIndex].SetImage(SnakeImage.Tail);
 
             // Keep loops seperate - all parts need the correct direction before any moves
             foreach (SnakePart snakepart in parts)
@@ -119,7 +154,6 @@ namespace SnakeGame
                 }
                 catch (Exception ex) when (ex is OutOfMapException || ex is PartsCollisionException)
                 {
-                    // TODO: Better Game Over
                     GameOver();
                     break;
                 }
@@ -157,14 +191,6 @@ namespace SnakeGame
             image.SetValue(Grid.RowProperty, position.Value);
         }
 
-        private void StartGameLoop()
-        {
-            running = true;
-            AddPart();
-            CreateApple();
-            GameLoop();
-        }
-
         private void CreateApple()
         {
             bool foundGoodPosition = false;
@@ -186,11 +212,18 @@ namespace SnakeGame
         private void AppleColided()
         {
             apple.SnakeCollided();
-            scoreAdded();
+            OnScoreAdded();
             AddPart();
             CreateApple();
         }
 
+        private void StartGameLoop()
+        {
+            running = true;
+            AddPart();
+            CreateApple();
+            GameLoop();
+        }
         private async void GameLoop()
         {
             while (running)
@@ -206,11 +239,14 @@ namespace SnakeGame
                 snakePart.Delete();
             }
             parts.Clear();
+            apple.Delete();
             StopGameLoop();
+            OnGameOver();
         }
         void StopGameLoop() { running = false; }
 
-        public delegate void ScoreAdded();
+        public delegate void ScoreAddedEvent();
+        public delegate void GameOverEvent();
 
         /// <summary>
         /// Keyboard controls. Changes the snake head direction based on input

@@ -31,18 +31,13 @@ namespace SnakeGame
         {
             this.parent = parent;
             InitializeComponent();
-            if (WindowState == WindowState.Maximized || WindowState == WindowState.Minimized) // TODO: Make this load up and save up, with resolution in settings
+            if (WindowState == WindowState.Maximized || WindowState == WindowState.Minimized)
                 isFullscreen = true;
             else
                 isFullscreen = false;
 
             Visibility = Visibility.Visible;
-            Focus();
-            StartGame();
-        }
 
-        private void StartGame()
-        {
             // Green checkerboard for visuals
             for (int i = 0; i < 16; i++)
             {
@@ -60,10 +55,26 @@ namespace SnakeGame
                     rec.Visibility = Visibility.Visible;
                 }
             }
+            Focus();
+            StartGame();
+        }
 
+        private void StartGame()
+        {
+            GameOverGrid.Visibility = Visibility.Hidden;
             KeyValuePair<int, int> position = new KeyValuePair<int, int>(new Random().Next(2, 13), new Random().Next(2, 13));
             snake = new Snake(position, MainGameGrid);
-            snake.scoreAdded += Snake_scoreAdded;
+            snake.OnScoreAdded += Snake_scoreAdded;
+            snake.OnGameOver += Snake_gameOver;
+            ScoreLabel.Content = "Score: 0";
+        }
+
+        private void Snake_gameOver()
+        {
+            GameOverScore.Content = "Score: " + score;
+            GameOverGrid.Visibility = Visibility.Visible;
+            score = 0;
+
         }
 
         private void Snake_scoreAdded()
@@ -71,6 +82,7 @@ namespace SnakeGame
             score += 100;
             ScoreLabel.Content = "Score: " + score;
         }
+        private void PlayAgainButton_Click(object sender, RoutedEventArgs e) => StartGame();
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             if (parent != null) // HACK
@@ -106,5 +118,6 @@ namespace SnakeGame
                 WindowState = WindowState.Minimized;
         }
         private void OnKeyDownEvent(object sender, KeyEventArgs e) => snake.KeyDownEvent(sender, e);
+
     }
 }

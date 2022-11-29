@@ -108,6 +108,12 @@ namespace SnakeGame
                 case SnakeImage.TurnRight:
                     image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/SnakeTurnRight.png")));
                     break;
+                case SnakeImage.TailTurnLeft:
+                    image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/SnakeTailTurnLeft.png")));
+                    break;
+                case SnakeImage.TailTurnRight:
+                    image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/SnakeTailTurnRight.png")));
+                    break;
 
             }
         }
@@ -196,7 +202,9 @@ namespace SnakeGame
         Body,
         Tail,
         TurnLeft,
-        TurnRight
+        TurnRight,
+        TailTurnLeft,
+        TailTurnRight
     }
 
     public class OutOfMapException : Exception
