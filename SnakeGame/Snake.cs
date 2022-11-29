@@ -253,28 +253,29 @@ namespace SnakeGame
         /// </summary>
         public void KeyDownEvent(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            switch (e.Key)
-            {
-                case System.Windows.Input.Key.W:
-                case System.Windows.Input.Key.Up:
-                    parts[0].SetDirection(SnakeDirection.Up);
-                    break;
-                case System.Windows.Input.Key.D:
-                case System.Windows.Input.Key.Right:
-                    parts[0].SetDirection(SnakeDirection.Right);
-                    break;
-                case System.Windows.Input.Key.S:
-                case System.Windows.Input.Key.Down:
-                    parts[0].SetDirection(SnakeDirection.Down);
-                    break;
-                case System.Windows.Input.Key.A:
-                case System.Windows.Input.Key.Left:
-                    parts[0].SetDirection(SnakeDirection.Left);
-                    break;
-                //case System.Windows.Input.Key.E: // HACK
-                //    AddPart();
-                //    break;
-            }
+            if (parts.Count > 0)
+                switch (e.Key)
+                {
+                    case System.Windows.Input.Key.W:
+                    case System.Windows.Input.Key.Up:
+                        parts[0].SetDirection(SnakeDirection.Up);
+                        break;
+                    case System.Windows.Input.Key.D:
+                    case System.Windows.Input.Key.Right:
+                        parts[0].SetDirection(SnakeDirection.Right);
+                        break;
+                    case System.Windows.Input.Key.S:
+                    case System.Windows.Input.Key.Down:
+                        parts[0].SetDirection(SnakeDirection.Down);
+                        break;
+                    case System.Windows.Input.Key.A:
+                    case System.Windows.Input.Key.Left:
+                        parts[0].SetDirection(SnakeDirection.Left);
+                        break;
+                        //case System.Windows.Input.Key.E: // HACK
+                        //    AddPart();
+                        //    break;
+                }
         }
     }
 
