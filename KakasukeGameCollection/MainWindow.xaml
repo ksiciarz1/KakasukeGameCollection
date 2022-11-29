@@ -7,6 +7,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button x:Name="SnakeButton" Content="Snake" HorizontalAlignment="Center" Margin="0,207,0,0" VerticalAlignment="Top" Grid.RowSpan="2" Click="SnakeButtonClick"/>
+        <Button x:Name="SnakeButton" Content="Snake" HorizontalAlignment="Center" Margin="0,121,0,0" VerticalAlignment="Top" Click="SnakeButtonClick" Height="96" Width="172" BorderBrush="Black" BorderThickness="5,5,5,5">
+            <Button.Background>
+                <ImageBrush ImageSource="/Resources/SnakePreview.png" Stretch="UniformToFill"/>
+            </Button.Background>
+        </Button>
     </Grid>
 </Window>
