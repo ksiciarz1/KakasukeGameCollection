@@ -25,11 +25,19 @@ namespace SaperGame
         public SaperWindow()
         {
             InitializeComponent();
+            StartGame();
+        }
 
+        private void StartGame()
+        {
+            GameOverGrid.Visibility = Visibility.Hidden;
             Random rand = new Random();
             int columnSize = rand.Next(8, 20);
             int rowSize = rand.Next(8, 20);
+            SetWindowSize(columnSize, rowSize);
+            // TODO: clear all images from previous saper
             saper = new Saper(columnSize, rowSize, this);
+            saper.onGameOver += ShowGameOverGrid;
         }
 
         public SaperWindow(Window parent) : this()
@@ -37,10 +45,29 @@ namespace SaperGame
             this.parent = parent;
         }
 
-        internal void SetWindowSize(int x, int y)
+        private void SetWindowSize(int x, int y)
         {
             myWindow.Width = x * 35;
-            myWindow.Height = y * 35;
+            myWindow.Height = y * 35 + 25;
         }
+        private void ShowGameOverGrid() => GameOverGrid.Visibility = Visibility.Visible;
+        private void TryAgainButtonClick(object sender, RoutedEventArgs e)
+        {
+            saper.Delete();
+            StartGame();
+        }
+        private void CloseButtonClick(object sender, RoutedEventArgs e)
+        {
+            if (parent == null)
+            {
+                Close();
+                return;
+            }
+            parent.Visibility = Visibility.Visible;
+            parent.Focus();
+            Close();
+        }
+
+        internal void SetMinesLeft(int minesLeft) => MinesLeftTextBlock.Text = "Mines left: " + minesLeft;
     }
 }

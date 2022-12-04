@@ -10,42 +10,48 @@ using System.Windows.Media.Imaging;
 
 namespace SaperGame
 {
-    class SaperPart
+    internal class SaperPart
     {
         private readonly Image tileImage;
         private readonly Image mineImage;
         private readonly Image flagImage;
         private readonly Label label;
-
-        private bool flagged = false;
-        private bool discovered = false;
-        private KeyValuePair<int, int> gridPosition;
         private readonly Grid mainGameGrid;
         private readonly Saper manager;
 
-        public int surroundingMines;
-        public SaperTileType saperTile = SaperTileType.None;
+        private readonly BitmapImage tile = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/Tile.png")));
+        private readonly BitmapImage tileDiscovered = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/TileDiscovered.png")));
+        private readonly BitmapImage mine = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/Mine.png")));
+        private readonly BitmapImage mineExploaded = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/MineExploaded.png")));
+        private readonly BitmapImage flag = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/Flag.png")));
 
-        public SaperPart(int x, int y, Grid mainGameGrid, Saper manager)
+        private bool discovered = false;
+        private KeyValuePair<int, int> gridPosition;
+
+        internal bool flagged = false;
+        internal int surroundingMines;
+        internal SaperTileType saperTile = SaperTileType.None;
+
+        internal SaperPart(int x, int y, Grid mainGameGrid, Saper manager)
         {
             this.mainGameGrid = mainGameGrid;
             this.manager = manager;
             gridPosition = new KeyValuePair<int, int>(x, y);
 
             tileImage = new Image();
-            tileImage.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/Tile.png")));
+            tileImage.Source = tile;
             mainGameGrid.Children.Add(tileImage);
             tileImage.SetValue(Grid.ColumnProperty, x);
             tileImage.SetValue(Grid.RowProperty, y);
 
             mineImage = new Image();
-            mineImage.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/Mine.png")));
+            mineImage.Source = mine;
             mainGameGrid.Children.Add(mineImage);
             mineImage.SetValue(Grid.ColumnProperty, x);
             mineImage.SetValue(Grid.RowProperty, y);
 
             flagImage = new Image();
-            flagImage.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/Flag.png")));
+            flagImage.Source = flag;
             mainGameGrid.Children.Add(flagImage);
             flagImage.SetValue(Grid.ColumnProperty, x);
             flagImage.SetValue(Grid.RowProperty, y);
@@ -70,26 +76,34 @@ namespace SaperGame
             flagImage.MouseRightButtonDown += ToggleFlagEvent;
             label.MouseRightButtonDown += ToggleFlagEvent;
         }
-        public void Expload()
+        internal void Expload()
         {
-            mineImage.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/MineExploaded.png")));
+            mineImage.Source = mineExploaded;
             mineImage.Visibility = System.Windows.Visibility.Visible;
             discovered = true;
         }
-        public void Discover()
+        internal void Discover()
         {
             if (discovered)
                 return;
+
             discovered = true;
-            tileImage.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/TileDiscovered.png")));
+            tileImage.Source = tileDiscovered;
             label.Content = surroundingMines;
+
             if (surroundingMines != 0)
-            {
                 label.Visibility = System.Windows.Visibility.Visible;
-            }
+
             else
                 CheckSurroundForMines();
 
+        }
+        internal void Delete()
+        {
+            tileImage.Source = null;
+            mineImage.Source = null;
+            flagImage.Source = null;
+            label.Content = null;
         }
 
         private void CheckSurroundForMines()
@@ -120,6 +134,7 @@ namespace SaperGame
                 flagged = false;
                 flagImage.Visibility = System.Windows.Visibility.Hidden;
             }
+            manager.ChangeFlagNumber(flagged);
         }
         private void ClickEvent(Object o, MouseButtonEventArgs e)
         {
@@ -144,7 +159,7 @@ namespace SaperGame
 
 
     }
-    public enum SaperTileType
+    internal enum SaperTileType
     {
         None,
         Empty,

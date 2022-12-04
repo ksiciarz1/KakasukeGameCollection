@@ -8,21 +8,26 @@ using System.Windows.Controls;
 
 namespace SaperGame
 {
-    class Saper
+    internal class Saper
     {
-        private Grid mainGameGrid;
+        private readonly Grid mainGameGrid;
+        private readonly SaperWindow saperWindow;
         private readonly KeyValuePair<int, int> gridDimentions;
-        private SaperPart[,] saperParts;
-        private const int minePercent = 5;
-        GameOverEvent onGameOver;
 
-        public Saper(int x, int y, SaperWindow myWindow)
+        private SaperPart[,] saperParts;
+        private int mines = 0;
+        private int flags = 0;
+        private const int minePercent = 5;
+        internal GameOverEvent? onGameOver;
+
+        internal Saper(int x, int y, SaperWindow myWindow)
         {
+            saperWindow = myWindow;
             mainGameGrid = myWindow.MainGameGrid;
             gridDimentions = new KeyValuePair<int, int>(x, y);
             saperParts = new SaperPart[x, y];
-            myWindow.SetWindowSize(x, y);
 
+            // Creating grid
             for (int i = 0; i < x; i++)
             {
                 mainGameGrid.ColumnDefinitions.Add(new ColumnDefinition());
@@ -32,6 +37,7 @@ namespace SaperGame
                 mainGameGrid.RowDefinitions.Add(new RowDefinition());
             }
 
+            // Adding saper parts
             for (int i = 0; i < x; i++)
             {
                 for (int j = 0; j < y; j++)
@@ -42,40 +48,30 @@ namespace SaperGame
 
 
         }
-        public void GameOver()
-        {
-            if (onGameOver != null)
-                onGameOver.Invoke();
-
-            for (int i = 0; i < gridDimentions.Key; i++)
-            {
-                for (int j = 0; j < gridDimentions.Value; j++)
-                {
-                    if (saperParts[i, j].saperTile == SaperTileType.Mine)
-                        saperParts[i, j].Expload();
-                    else
-                        saperParts[i, j].Discover();
-                }
-            }
-        }
-        public void FirstClick()
+        internal void FirstClick()
         {
             Random random = new Random();
 
+            // Setting tile type for each saper part
             for (int i = 0; i < gridDimentions.Key; i++)
             {
                 for (int j = 0; j < gridDimentions.Value; j++)
                 {
+                    // To not set mine on first tile clicked
                     if (saperParts[i, j].saperTile == SaperTileType.None)
                     {
                         if (random.Next(101) <= minePercent)
+                        {
                             saperParts[i, j].saperTile = SaperTileType.Mine;
+                            mines++;
+                        }
                         else
                             saperParts[i, j].saperTile = SaperTileType.Empty;
                     }
                 }
             }
 
+            // Checking how many mines surround each part
             for (int i = 0; i < gridDimentions.Key; i++)
             {
                 for (int j = 0; j < gridDimentions.Value; j++)
@@ -99,31 +95,82 @@ namespace SaperGame
                     minesSurrounding = 0;
                 }
             }
+            saperWindow.SetMinesLeft(mines);
         }
-
-        public bool CheckIfPartHaveMine(KeyValuePair<int, int> gridPosition)
+        internal void GameOver()
         {
-            try
+            if (onGameOver != null)
+                onGameOver.Invoke();
+
+            for (int i = 0; i < gridDimentions.Key; i++)
             {
-                if (saperParts[gridPosition.Key, gridPosition.Value].saperTile == SaperTileType.Mine)
-                    return true;
-                else
-                    return false;
+                for (int j = 0; j < gridDimentions.Value; j++)
+                {
+                    if (saperParts[i, j].saperTile == SaperTileType.Mine)
+                        saperParts[i, j].Expload();
+                    else
+                        saperParts[i, j].Discover();
+                }
             }
-            catch
-            {
+        }
+        internal bool CheckIfPartHaveMine(KeyValuePair<int, int> gridPosition)
+        {
+            if (gridPosition.Key < 0 || gridPosition.Key >= gridDimentions.Key
+                || gridPosition.Value < 0 || gridPosition.Value >= gridDimentions.Value)
                 return false;
-            }
+            if (saperParts[gridPosition.Key, gridPosition.Value].saperTile == SaperTileType.Mine)
+                return true;
+
+            return false;
         }
-        public void DiscoverPart(KeyValuePair<int, int> gridPosition)
+        internal void DiscoverPart(KeyValuePair<int, int> gridPosition)
         {
-            try
+            if (gridPosition.Key < 0 || gridPosition.Key >= gridDimentions.Key
+                || gridPosition.Value < 0 || gridPosition.Value >= gridDimentions.Value)
+                return;
+            saperParts[gridPosition.Key, gridPosition.Value].Discover();
+        }
+        internal void Delete()
+        {
+            foreach (SaperPart part in saperParts)
             {
-                saperParts[gridPosition.Key, gridPosition.Value].Discover();
+                part.Delete();
             }
-            catch { }
+
+            mainGameGrid.Children.Clear();
+            mainGameGrid.ColumnDefinitions.Clear();
+            mainGameGrid.RowDefinitions.Clear();
+        }
+        internal void ChangeFlagNumber(bool added)
+        {
+            if (added)
+                flags++;
+            else
+                flags--;
+
+            saperWindow.SetMinesLeft(mines - flags);
+
+            if (mines == flags)
+                TryToWin();
         }
 
-        public delegate void GameOverEvent();
+        private void TryToWin()
+        {
+            foreach (SaperPart part in saperParts)
+            {
+                if (!part.flagged)
+                {
+                    if (part.saperTile == SaperTileType.Mine)
+                    {
+                        part.Expload();
+                        break;
+                    }
+                    else
+                        part.Discover();
+                }
+            }
+        }
+
+        internal delegate void GameOverEvent();
     }
 }
