@@ -5,32 +5,31 @@
 		<TargetFramework>net6.0-windows</TargetFramework>
 		<Nullable>enable</Nullable>
 		<UseWPF>true</UseWPF>
-		<ValidateExecutableReferencesMatchSelfContained>false</ValidateExecutableReferencesMatchSelfContained>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Update="Resources\Apple.png">
+		<None Update="Resources\Snake\Apple.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="Resources\SnakeBody.png">
+		<None Update="Resources\Snake\SnakeBody.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="Resources\SnakeHead.png">
+		<None Update="Resources\Snake\SnakeHead.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="Resources\SnakeTail.png">
+		<None Update="Resources\Snake\SnakeTail.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="Resources\SnakeTailTurnLeft.png">
+		<None Update="Resources\Snake\SnakeTailTurnLeft.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="Resources\SnakeTailTurnRight.png">
+		<None Update="Resources\Snake\SnakeTailTurnRight.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="Resources\SnakeTurnLeft.png">
+		<None Update="Resources\Snake\SnakeTurnLeft.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="Resources\SnakeTurnRight.png">
+		<None Update="Resources\Snake\SnakeTurnRight.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>

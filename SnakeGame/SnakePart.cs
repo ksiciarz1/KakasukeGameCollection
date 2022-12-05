@@ -33,21 +33,15 @@ namespace SnakeGame
             switch (SnakeImage)
             {
                 case SnakeImage.Head:
-                    image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/SnakeHead.png")));
+                    image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/Snake/SnakeHead.png")));
                     break;
                 case SnakeImage.Body:
-                    image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/SnakeBody.png")));
+                    image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/Snake/SnakeBody.png")));
                     break;
                 case SnakeImage.Tail:
-                    image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/SnakeTail.png")));
+                    image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/Snake/SnakeTail.png")));
                     break;
             }
-            const int size = 45;
-            //image.MinWidth = size;
-            //image.Width = size;
-            //image.Height = size;
-            //image.MinHeight = size;
-            //image.Stretch = Stretch.Fill;
             manager.GameGrid.Children.Add(image);
         }
         public SnakePart(KeyValuePair<int, int> positionOnGrid, Snake manager, SnakeImage snakeImage) : this(positionOnGrid, manager)
@@ -93,25 +87,25 @@ namespace SnakeGame
             switch (SnakeImage)
             {
                 case SnakeImage.Head:
-                    image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/SnakeHead.png")));
+                    image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/Snake/SnakeHead.png")));
                     break;
                 case SnakeImage.Body:
-                    image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/SnakeBody.png")));
+                    image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/Snake/SnakeBody.png")));
                     break;
                 case SnakeImage.Tail:
-                    image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/SnakeTail.png")));
+                    image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/Snake/SnakeTail.png")));
                     break;
                 case SnakeImage.TurnLeft:
-                    image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/SnakeTurnLeft.png")));
+                    image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/Snake/SnakeTurnLeft.png")));
                     break;
                 case SnakeImage.TurnRight:
-                    image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/SnakeTurnRight.png")));
+                    image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/Snake/SnakeTurnRight.png")));
                     break;
                 case SnakeImage.TailTurnLeft:
-                    image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/SnakeTailTurnLeft.png")));
+                    image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/Snake/SnakeTailTurnLeft.png")));
                     break;
                 case SnakeImage.TailTurnRight:
-                    image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/SnakeTailTurnRight.png")));
+                    image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/Snake/SnakeTailTurnRight.png")));
                     break;
 
             }
@@ -182,7 +176,6 @@ namespace SnakeGame
         public void Delete()
         {
             image.Source = null;
-            image = null;
         }
 
     }

@@ -20,11 +20,11 @@ namespace SaperGame
         private readonly Grid mainGameGrid;
         private readonly Saper manager;
 
-        private readonly BitmapImage tile = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/Tile.png")));
-        private readonly BitmapImage tileDiscovered = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/TileDiscovered.png")));
-        private readonly BitmapImage mine = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/Mine.png")));
-        private readonly BitmapImage mineExploaded = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/MineExploaded.png")));
-        private readonly BitmapImage flag = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/Flag.png")));
+        private readonly BitmapImage tile = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/Saper/Tile.png")));
+        private readonly BitmapImage tileDiscovered = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/Saper/TileDiscovered.png")));
+        private readonly BitmapImage mine = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/Saper/Mine.png")));
+        private readonly BitmapImage mineExploaded = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/Saper/MineExploaded.png")));
+        private readonly BitmapImage flag = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/Saper/Flag.png")));
 
         private bool discovered = false;
         private KeyValuePair<int, int> gridPosition;

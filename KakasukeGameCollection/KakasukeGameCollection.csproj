@@ -1,32 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <UseWPF>true</UseWPF>
-	  <ValidateExecutableReferencesMatchSelfContained>false</ValidateExecutableReferencesMatchSelfContained>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net6.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="SaperPreview.png" />
-    <None Remove="SnakePreview.png" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\CheckersGame\CheckersGame.csproj" />
+		<ProjectReference Include="..\SaperGame\SaperGame.csproj" />
+		<ProjectReference Include="..\SnakeGame\SnakeGame.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\SaperGame\SaperGame.csproj" />
-    <ProjectReference Include="..\SnakeGame\SnakeGame.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="SaperPreview.png" />
-    <Resource Include="SnakePreview.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Resources\SnakePreview.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<None Update="Resources\SaperPreview.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="Resources\SnakePreview.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
 
 </Project>

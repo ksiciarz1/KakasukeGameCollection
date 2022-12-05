@@ -19,7 +19,7 @@ namespace SnakeGame
         {
             positionOnGrid = gridPosition;
             image = new Image();
-            image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/Apple.png")));
+            image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/Snake/Apple.png")));
             image.Visibility = System.Windows.Visibility.Visible;
             mainGrid.Children.Add(image);
             image.SetValue(Grid.ColumnProperty, gridPosition.Key);

@@ -18,8 +18,8 @@ namespace SnakeGame
         public bool Running { get => running; }
         private bool running = false;
         private Apple apple;
-        public event ScoreAddedEvent OnScoreAdded;
-        public event GameOverEvent OnGameOver;
+        public event ScoreAddedEvent? OnScoreAdded;
+        public event GameOverEvent? OnGameOver;
 
         public Snake(KeyValuePair<int, int> startingPosition, Grid gameGrid)
         {
@@ -31,6 +31,9 @@ namespace SnakeGame
             StartGameLoop();
         }
 
+        /// <summary>
+        /// Adds a snake part to snake
+        /// </summary>
         public void AddPart()
         {
             if (parts.Count == 1) // Don't change head to body upon adding new part
@@ -112,7 +115,8 @@ namespace SnakeGame
             }
             // Tail Turning
             int tailIndex = parts.Count - 1; // Tail
-            if (parts[tailIndex - 1].directionToChangeTo != parts[tailIndex].directionToChangeTo && parts[tailIndex].directionToChangeTo != SnakeDirection.None)
+            if (parts[tailIndex - 1].directionToChangeTo != parts[tailIndex].directionToChangeTo
+                && parts[tailIndex].directionToChangeTo != SnakeDirection.None)
             {
                 switch (parts[tailIndex].directionToChangeTo)
                 {
@@ -191,6 +195,9 @@ namespace SnakeGame
             image.SetValue(Grid.RowProperty, position.Value);
         }
 
+        /// <summary>
+        /// Creates apple in a random unoccupied space on map
+        /// </summary>
         private void CreateApple()
         {
             bool foundGoodPosition = false;
@@ -212,7 +219,8 @@ namespace SnakeGame
         private void AppleColided()
         {
             apple.SnakeCollided();
-            OnScoreAdded();
+            if (OnScoreAdded != null)
+                OnScoreAdded();
             AddPart();
             CreateApple();
         }
@@ -241,7 +249,8 @@ namespace SnakeGame
             parts.Clear();
             apple.Delete();
             StopGameLoop();
-            OnGameOver();
+            if (OnGameOver != null)
+                OnGameOver();
         }
         void StopGameLoop() { running = false; }
 
@@ -272,9 +281,6 @@ namespace SnakeGame
                     case System.Windows.Input.Key.Left:
                         parts[0].SetDirection(SnakeDirection.Left);
                         break;
-                        //case System.Windows.Input.Key.E: // HACK
-                        //    AddPart();
-                        //    break;
                 }
         }
     }

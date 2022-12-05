@@ -9,12 +9,12 @@
     <Grid>
         <Button x:Name="SaperButton" Content="Saper" HorizontalAlignment="Center" VerticalAlignment="Top" Click="SaperButtonClick" Height="96" Width="172" BorderBrush="Black" BorderThickness="5,5,5,5" Margin="0,217,0,0">
             <Button.Background>
-                <ImageBrush ImageSource="/SaperPreview.png" Stretch="UniformToFill"/>
+                <ImageBrush Stretch="UniformToFill"/>
             </Button.Background>
         </Button>
         <Button x:Name="SnakeButton" Content="Snake" HorizontalAlignment="Center" Click="SnakeButtonClick" Height="96" Width="172" BorderBrush="Black" BorderThickness="5,5,5,5" VerticalAlignment="Top" Margin="0,116,0,0">
             <Button.Background>
-                <ImageBrush ImageSource="/SnakePreview.png" Stretch="UniformToFill"/>
+                <ImageBrush Stretch="UniformToFill"/>
             </Button.Background>
         </Button>
     </Grid>

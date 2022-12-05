@@ -12,7 +12,7 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="CloseButton" Content="Close" HorizontalAlignment="Left" RenderTransformOrigin="1.026,0.408" Grid.Column="1" Click="CloseButtonClick" Margin="56,0,0,0" Height="25"/>
+            <Button x:Name="CloseButton" Content="Close" HorizontalAlignment="Right" RenderTransformOrigin="1.026,0.408" Grid.Column="1" Click="CloseButtonClick" Margin="56,0,0,0" Height="25"/>
             <Button x:Name="TryAgainButton" Content="Try Again" HorizontalAlignment="Left" Margin="100,0,0,0" Click="TryAgainButtonClick"/>
             <TextBlock x:Name="MinesLeftTextBlock" TextWrapping="Wrap" Text="Mines left: " VerticalAlignment="Center" HorizontalAlignment="Left" Width="109" Height="19"/>
             <Button x:Name="AdvancedButton" Content="Advanced" Margin="153,0,0,0" HorizontalAlignment="Left" Grid.ColumnSpan="2" Click="AdvancedButtonClick"/>

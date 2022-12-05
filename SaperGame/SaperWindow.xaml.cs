@@ -21,11 +21,13 @@ namespace SaperGame
     /// </summary>
     public partial class SaperWindow : Window
     {
-        private Saper saper;
+        private Saper? saper;
         private AdvancedStart? advancedStart;
-        Window? parent;
-        private SaperWindow()
+        private readonly Window parent;
+
+        public SaperWindow(Window parent)
         {
+            this.parent = parent;
             InitializeComponent();
             Visibility = Visibility.Visible;
             Focus();
@@ -40,7 +42,6 @@ namespace SaperGame
             int minesPercent = rand.Next(5, 30);
             CreateSaperWindow(columnSize, rowSize, minesPercent);
         }
-
         private void CreateSaperWindow(int columnSize, int rowSize, int minesPercent)
         {
             GameOverGrid.Visibility = Visibility.Hidden;
@@ -49,12 +50,6 @@ namespace SaperGame
             saper = new Saper(columnSize, rowSize, minesPercent, this);
             saper.onGameOver += ShowGameOverGrid;
         }
-
-        public SaperWindow(Window parent) : this()
-        {
-            this.parent = parent;
-        }
-
         private void SetWindowSize(int x, int y)
         {
             myWindow.Width = x * 35;
@@ -63,18 +58,17 @@ namespace SaperGame
         private void ShowGameOverGrid() => GameOverGrid.Visibility = Visibility.Visible;
         private void TryAgainButtonClick(object sender, RoutedEventArgs e)
         {
-            saper.Delete();
+            if (saper != null)
+                saper.Delete();
             StartGame();
         }
         private void CloseButtonClick(object sender, RoutedEventArgs e)
         {
-            if (parent == null)
+            if (parent != null)
             {
-                Close();
-                return;
+                parent.Visibility = Visibility.Visible;
+                parent.Focus();
             }
-            parent.Visibility = Visibility.Visible;
-            parent.Focus();
             Close();
         }
         private void AdvancedButtonClick(object sender, RoutedEventArgs e)
@@ -93,7 +87,8 @@ namespace SaperGame
         }
         internal void AdvancedSettingConfirmed(int width, int height, int minesPercent)
         {
-            saper.Delete();
+            if (saper != null)
+                saper.Delete();
             CreateSaperWindow(width, height, minesPercent);
         }
     }

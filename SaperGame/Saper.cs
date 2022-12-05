@@ -47,8 +47,6 @@ namespace SaperGame
                     saperParts[i, j] = new SaperPart(i, j, mainGameGrid, this);
                 }
             }
-
-
         }
         internal void FirstClick()
         {
@@ -94,7 +92,6 @@ namespace SaperGame
                         }
                     }
                     saperParts[i, j].surroundingMines = minesSurrounding;
-                    minesSurrounding = 0;
                 }
             }
             saperWindow.SetMinesLeft(mines);
@@ -115,6 +112,9 @@ namespace SaperGame
                 }
             }
         }
+        /// <summary>
+        /// Checks if part in position have mine
+        /// </summary>
         internal bool CheckIfPartHaveMine(KeyValuePair<int, int> gridPosition)
         {
             if (gridPosition.Key < 0 || gridPosition.Key >= gridDimentions.Key
@@ -132,6 +132,9 @@ namespace SaperGame
                 return;
             saperParts[gridPosition.Key, gridPosition.Value].Discover();
         }
+        /// <summary>
+        /// Clears the grid
+        /// </summary>
         internal void Delete()
         {
             foreach (SaperPart part in saperParts)
@@ -143,6 +146,9 @@ namespace SaperGame
             mainGameGrid.ColumnDefinitions.Clear();
             mainGameGrid.RowDefinitions.Clear();
         }
+        /// <summary>
+        /// Used to caluculate mines left to flag
+        /// </summary>
         internal void ChangeFlagNumber(bool added)
         {
             if (added)
@@ -153,10 +159,10 @@ namespace SaperGame
             saperWindow.SetMinesLeft(mines - flags);
 
             if (mines == flags)
-                TryToWin();
+                Win();
         }
 
-        private void TryToWin()
+        private void Win()
         {
             foreach (SaperPart part in saperParts)
             {
