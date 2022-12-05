@@ -96,5 +96,10 @@ namespace SaperGame
             saper.Delete();
             CreateSaperWindow(width, height, minesPercent);
         }
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+            CloseButtonClick(null, null);
+        }
     }
 }

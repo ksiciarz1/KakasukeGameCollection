@@ -146,6 +146,10 @@ namespace SnakeGame
                 WindowState = WindowState.Minimized;
         }
         private void OnKeyDownEvent(object sender, KeyEventArgs e) => snake.KeyDownEvent(sender, e);
-
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+            CloseButton_Click(null, null);
+        }
     }
 }
