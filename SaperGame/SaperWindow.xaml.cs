@@ -22,9 +22,11 @@ namespace SaperGame
     {
         private Saper saper;
         Window? parent;
-        public SaperWindow()
+        private SaperWindow()
         {
             InitializeComponent();
+            Visibility = Visibility.Visible;
+            Focus();
             StartGame();
         }
 

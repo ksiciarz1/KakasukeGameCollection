@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace SaperGame
@@ -90,6 +91,28 @@ namespace SaperGame
             discovered = true;
             tileImage.Source = tileDiscovered;
             label.Content = surroundingMines;
+            label.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
+            label.VerticalContentAlignment = System.Windows.VerticalAlignment.Center;
+
+            switch (surroundingMines)
+            {
+                case 1:
+                    label.Foreground = Brushes.Green; break;
+                case 2:
+                    label.Foreground = Brushes.DarkGreen; break;
+                case 3:
+                    label.Foreground = Brushes.Blue; break;
+                case 4:
+                    label.Foreground = Brushes.BlueViolet; break;
+                case 5:
+                    label.Foreground = Brushes.DarkViolet; break;
+                case 6:
+                    label.Foreground = Brushes.DarkRed; break;
+                case 7:
+                case 8:
+                case 9:
+                    label.Foreground = Brushes.Red; break;
+            }
 
             if (surroundingMines != 0)
                 label.Visibility = System.Windows.Visibility.Visible;
