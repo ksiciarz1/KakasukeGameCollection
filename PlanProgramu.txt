@@ -1,4 +1,25 @@
+ALL:
+	Border icons
+	Border mouse drag
+	Best score saving (prob JSON)
+
+Main:
+	Checkers Button
+	Chess Button
+
 Snake:
-	grid 16x16
-	TODO:
-		normal control border icons
+	New visuals
+	? Game grid border
+
+Saper:
+	Win screen
+	Score system
+	Minimal window size
+	Double click functionality
+	? Double click hover functionality
+
+Checkers:
+	Whole game
+
+Chess: 
+	Motivate your employees
