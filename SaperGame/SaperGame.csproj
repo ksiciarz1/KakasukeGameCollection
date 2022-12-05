@@ -8,19 +8,19 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Update="Resources\Flag.png">
+		<None Update="Resources\Saper\Flag.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="Resources\Mine.png">
+		<None Update="Resources\Saper\Mine.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="Resources\MineExploaded.png">
+		<None Update="Resources\Saper\MineExploaded.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="Resources\Tile.png">
+		<None Update="Resources\Saper\Tile.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="Resources\TileDiscovered.png">
+		<None Update="Resources\Saper\TileDiscovered.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>

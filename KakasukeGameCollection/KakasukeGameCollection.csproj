@@ -13,6 +13,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\CheckersGame\CheckersGame.csproj" />
 		<ProjectReference Include="..\SaperGame\SaperGame.csproj" />
 		<ProjectReference Include="..\SnakeGame\SnakeGame.csproj" />
 	</ItemGroup>
