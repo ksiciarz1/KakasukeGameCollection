@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,13 +18,14 @@ namespace SaperGame
         private SaperPart[,] saperParts;
         private int mines = 0;
         private int flags = 0;
-        private const int minePercent = 5;
+        private int minesPercent;
         internal GameOverEvent? onGameOver;
 
-        internal Saper(int x, int y, SaperWindow myWindow)
+        internal Saper(int x, int y, int minesPercent, SaperWindow myWindow)
         {
             saperWindow = myWindow;
             mainGameGrid = myWindow.MainGameGrid;
+            this.minesPercent = minesPercent;
             gridDimentions = new KeyValuePair<int, int>(x, y);
             saperParts = new SaperPart[x, y];
 
@@ -60,7 +62,7 @@ namespace SaperGame
                     // To not set mine on first tile clicked
                     if (saperParts[i, j].saperTile == SaperTileType.None)
                     {
-                        if (random.Next(101) <= minePercent)
+                        if (random.Next(101) <= minesPercent)
                         {
                             saperParts[i, j].saperTile = SaperTileType.Mine;
                             mines++;

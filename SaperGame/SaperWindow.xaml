@@ -5,16 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SaperGame"
         mc:Ignorable="d"
-        Title="MainWindow" ResizeMode="CanMinimize" WindowStyle="None">
+        Title="MainWindow" ResizeMode="NoResize" WindowStyle="None">
     <Grid>
         <Grid x:Name="ControlGrid" Background="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" Margin="0,0,0,16" Height="25" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="CloseButton" Content="Close" HorizontalAlignment="Right" VerticalAlignment="Center" RenderTransformOrigin="1.026,0.408" Grid.Column="1" Click="CloseButtonClick"/>
-            <Button x:Name="TryAgainButton" Content="Try Again" HorizontalAlignment="Right" Margin="100,0,0,0" VerticalAlignment="Center" Click="TryAgainButtonClick"/>
+            <Button x:Name="CloseButton" Content="Close" HorizontalAlignment="Left" RenderTransformOrigin="1.026,0.408" Grid.Column="1" Click="CloseButtonClick" Margin="56,0,0,0" Height="25"/>
+            <Button x:Name="TryAgainButton" Content="Try Again" HorizontalAlignment="Left" Margin="100,0,0,0" Click="TryAgainButtonClick"/>
             <TextBlock x:Name="MinesLeftTextBlock" TextWrapping="Wrap" Text="Mines left: " VerticalAlignment="Center" HorizontalAlignment="Left" Width="109" Height="19"/>
+            <Button x:Name="AdvancedButton" Content="Advanced" Margin="153,0,0,0" HorizontalAlignment="Left" Grid.ColumnSpan="2" Click="AdvancedButtonClick"/>
         </Grid>
         <Grid x:Name="MainGameGrid" Margin="0,25,0,16"/>
         <Grid x:Name="GameOverGrid" Background="#FFA0A0A0" Margin="0,25,0,0" Visibility="Hidden" Opacity="0.5">
