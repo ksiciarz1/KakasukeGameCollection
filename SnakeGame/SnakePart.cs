@@ -42,12 +42,6 @@ namespace SnakeGame
                     image.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/Snake/SnakeTail.png")));
                     break;
             }
-            const int size = 45;
-            //image.MinWidth = size;
-            //image.Width = size;
-            //image.Height = size;
-            //image.MinHeight = size;
-            //image.Stretch = Stretch.Fill;
             manager.GameGrid.Children.Add(image);
         }
         public SnakePart(KeyValuePair<int, int> positionOnGrid, Snake manager, SnakeImage snakeImage) : this(positionOnGrid, manager)
@@ -182,7 +176,6 @@ namespace SnakeGame
         public void Delete()
         {
             image.Source = null;
-            image = null;
         }
 
     }

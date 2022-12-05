@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace KakasukeGameCollection
 {
@@ -27,8 +27,9 @@ namespace KakasukeGameCollection
         public MainWindow()
         {
             InitializeComponent();
+            SnakeButton.Background = new ImageBrush(new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/SnakePreview.png"))));
+            SaperButton.Background = new ImageBrush(new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/SaperPreview.png"))));
         }
-
 
         private void SnakeButtonClick(object sender, RoutedEventArgs e)
         {
@@ -36,7 +37,7 @@ namespace KakasukeGameCollection
             {
                 gameWindow = new SnakeGame.SnakeWindow(this);
                 gameWindow.Closed += GameWindowClosed;
-                Visibility = Visibility.Hidden;
+                gameWindow.ShowDialog();
             }
         }
         private void SaperButtonClick(object sender, RoutedEventArgs e)
@@ -45,7 +46,7 @@ namespace KakasukeGameCollection
             {
                 gameWindow = new SaperGame.SaperWindow(this);
                 gameWindow.Closed += GameWindowClosed;
-                Visibility = Visibility.Hidden;
+                gameWindow.ShowDialog();
             }
         }
         private void GameWindowClosed(object? sender, EventArgs e)

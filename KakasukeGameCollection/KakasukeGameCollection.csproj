@@ -8,19 +8,9 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Remove="SaperPreview.png" />
-		<None Remove="SnakePreview.png" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<ProjectReference Include="..\CheckersGame\CheckersGame.csproj" />
 		<ProjectReference Include="..\SaperGame\SaperGame.csproj" />
 		<ProjectReference Include="..\SnakeGame\SnakeGame.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Resource Include="SaperPreview.png" />
-		<Resource Include="SnakePreview.png" />
 	</ItemGroup>
 
 	<ItemGroup>
