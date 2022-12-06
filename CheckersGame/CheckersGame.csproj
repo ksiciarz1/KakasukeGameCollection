@@ -8,4 +8,19 @@
 		<BaseOutputPath>bin\</BaseOutputPath>
 	</PropertyGroup>
 
+	<ItemGroup>
+	  <None Update="Resources\Checkers\CheckerPiceRed.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Resources\Checkers\CheckerPiceWhite.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Resources\Checkers\SelectionRing.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Resources\Checkers\TileSelectionRing.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
 </Project>
