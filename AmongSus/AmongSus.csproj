@@ -5,7 +5,12 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>AmongSus.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="AmongSus.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <None Update="Resources\AmongSus\AmongSus.png">

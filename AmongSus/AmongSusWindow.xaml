@@ -4,14 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AmongSus"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Border BorderBrush="Black" BorderThickness="1" Background="#FF0016D2" Height="200" Width="200">
-            <Border.OpacityMask>
-                <ImageBrush ImageSource="/Resources/AmongSus/AmongSusBackground.png"/>
-            </Border.OpacityMask>
-            <Image Source="/Resources/AmongSus/AmongSus.png"/>
-        </Border>
-    </Grid>
+        mc:Ignorable="d" Height="800" Width="800" ResizeMode="NoResize">
+    <Canvas x:Name="Area">
+        <Canvas.Background>
+            <RadialGradientBrush>
+                <GradientStop Color="Black"/>
+                <GradientStop Color="White" Offset="1"/>
+            </RadialGradientBrush>
+        </Canvas.Background>
+    </Canvas>
 </Window>
