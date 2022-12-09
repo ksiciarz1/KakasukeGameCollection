@@ -39,24 +39,20 @@ namespace AmongSus
             {
                 crewmates.Add(new Crewmate(Area));
             }
+            Show();
             Loop();
         }
 
         private async void Loop()
         {
-            int i = 0;
             while (isRunning)
             {
-                i++;
                 foreach (Crewmate crewmate in crewmates)
                 {
                     crewmate.Update();
                 }
-                if (i > 2)
-                {
-                    i = 0;
-                    crewmates.Add(new Crewmate(Area));
-                }
+                crewmates.Add(new Crewmate(Area));
+
                 CanvasColorUpdate();
 
                 await Task.Delay(16);
