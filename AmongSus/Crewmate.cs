@@ -21,11 +21,13 @@ namespace AmongSus
         private readonly SolidColorBrush[] crewmateColors = { Brushes.Red, Brushes.Green, Brushes.Yellow, Brushes.Blue };
         private readonly Canvas mainCanvas;
 
-        private readonly double moveVectorX;
-        private readonly double moveVectorY;
+        private double moveVectorX;
+        private double moveVectorY;
 
         private double positionX;
         private double positionY;
+
+        private double rotation;
 
 
         public Crewmate(Canvas mainCanvas)
@@ -44,9 +46,19 @@ namespace AmongSus
             parentPart.Child = crewmate;
             mainCanvas.Children.Add(parentPart);
 
+            
 
-            moveVectorX = (2.1 + (0.1 * random.Next(-10, 11))) * random.Next(-1, 2);
-            moveVectorY = (2.1 + (0.1 * random.Next(-10, 11))) * random.Next(-1, 2);
+            moveVectorX = 0;
+            while (moveVectorX == 0)
+                moveVectorX = random.Next(2, 10) * random.Next(-1, 2);
+
+            moveVectorY = 0;
+            while (moveVectorY == 0)
+                moveVectorY = random.Next(2, 10) * random.Next(-1, 2);
+
+            rotation = 0;
+            while (rotation == 0)
+                rotation = random.Next(-10, 11);
 
             positionX = 400;
             positionY = 400;
@@ -64,6 +76,17 @@ namespace AmongSus
 
             double left = parentPart.Width / 2 + positionX;
             double top = parentPart.Height / 2 + positionY;
+
+            RotateTransform rotateTransform = new RotateTransform();
+            rotateTransform.Angle += rotation;
+            rotateTransform.CenterX = parentPart.Width / 2;
+            rotateTransform.CenterY = parentPart.Height / 2;
+            if (rotation > 0)
+                rotation += 1;
+            else
+                rotation -= 1;
+            //rotation %= 360;
+            parentPart.RenderTransform = rotateTransform;
 
             Canvas.SetLeft(parentPart, left);
             Canvas.SetTop(parentPart, top);
