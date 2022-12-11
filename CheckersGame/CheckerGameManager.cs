@@ -10,7 +10,7 @@ namespace CheckersGame
     internal class CheckerGameManager
     {
         private readonly CheckerWindow Parent;
-        private List<CheckerPice> checkerPices = new List<CheckerPice>();
+        private List<CheckerPiece> checkerPieces = new List<CheckerPiece>();
         private CheckerSelection checkerSelection = new CheckerSelection();
         private List<TileStatus> selectedTiles = new List<TileStatus>();
         private TileStatus[,] tiles = new TileStatus[8, 8];
@@ -22,83 +22,112 @@ namespace CheckersGame
             Parent = parent;
             GameGrid = parent.GameGrid;
 
-            // Creating pices
+            // Creating pieces and Tiles
             for (int i = 0; i < 8; i++)
             {
                 for (int j = 0; j < 8; j++)
                 {
+                    tiles[i, j] = new TileStatus(new GridPosition(i, j), GameGrid, this);
+                    TileStatus currentTile = tiles[i, j];
+                    currentTile.onTileClicked += ConfirmMove;
+
                     if (!((i + j) % 2 == 0))
                     {
                         GridPosition currentPosition = new GridPosition(i, j);
-                        if (j < 3) // White
+                        if (j < 3) // White Piece
                         {
-                            CheckerPice pice = new CheckerPice(currentPosition, CheckerColor.White, this);
-                            checkerPices.Add(pice);
-                            pice.onPiceSelected += SelectPice;
+                            currentTile.AddPiece(CheckerColor.White);
+                            currentTile.checkerPiece.onPieceSelected += SelectPiece;
                         }
-                        else if (j > 4) // Red
+                        else if (j > 4) // Red Piece
                         {
-                            CheckerPice pice = new CheckerPice(currentPosition, CheckerColor.Red, this);
-                            checkerPices.Add(pice);
-                            pice.onPiceSelected += SelectPice;
+                            currentTile.AddPiece(CheckerColor.Red);
+                            currentTile.checkerPiece.onPieceSelected += SelectPiece;
                         }
                     }
-
                 }
             }
-            for (int i = 0; i < 8; i++)
+
+        }
+
+        private void ConfirmMove(TileStatus tile)
+        {
+            if (tile.checkerPiece == null)
             {
-                for (int j = 0; j < 8; j++)
+                if (selectedTiles.Contains(tile))
                 {
-                    tiles[i, j] = new TileStatus(new GridPosition(i, j), GameGrid);
-                    if ((i + j) % 2 == 0)
-                        if (!(j < 3 && j > 4))
-                            tiles[i, j].occupied = true;
+                    if (checkerSelection.SelectedPiece != null)
+                    {
+                        CheckerPiece tileCheckerPiece = checkerSelection.SelectedPiece;
+                        tileCheckerPiece.MoveImage(tile.gridPosition);
+                        tileCheckerPiece.parentTile = tile;
+                        tile.checkerPiece = tileCheckerPiece;
+                        checkerSelection.SelectedPiece = null;
+
+                        foreach (TileStatus pieceToDelete in checkerSelection.selectedToDelete)
+                            pieceToDelete.checkerPiece.Delete();
+                        checkerSelection.selectedToDelete.Clear();
+
+                        foreach (TileStatus selectedTile in selectedTiles)
+                            selectedTile.Unselect();
+                        selectedTiles.Clear();
+                    }
                 }
             }
         }
 
         /// <summary>
-        /// Selects the pice and hightlights movable tiles
+        /// Selects the piece and hightlights movable tiles
         /// </summary>
-        /// <param name="pice">Selected pice</param>
-        private void SelectPice(CheckerPice pice)
+        /// <param name="piece">Selected piece</param>
+        private void SelectPiece(CheckerPiece piece)
         {
-            if (checkerSelection.SelectedPice != null)
-                checkerSelection.SelectedPice.Unselect();
-            checkerSelection.SelectedPice = pice;
+            checkerSelection.SelectedPiece?.Unselect();
+            checkerSelection.selectedToDelete.Clear();
+            checkerSelection.SelectedPiece = piece;
 
-            SelectSurroundingTiles(pice);
+            SelectSurroundingTiles(piece);
         }
 
-        private void SelectSurroundingTiles(CheckerPice pice)
+        private void SelectSurroundingTiles(CheckerPiece piece)
         {
-            // TODO: Select only tiles in front of pice
             if (selectedTiles.Count > 0)
                 foreach (TileStatus tile in selectedTiles)
                     tile.Unselect();
 
-            int x = pice.gridPosition.x;
-            int y = pice.gridPosition.y;
+            int x = piece.gridPosition.x;
+            int y = piece.gridPosition.y;
 
-            for (int i = -1; i < 2; i++)
+            for (int i = -1; i < 2; i += 2)
             {
-                for (int j = -1; j < 2; j++)
+                for (int j = -1; j < 2; j += 2)
                 {
                     if (i == 0 && j == 0)
                         continue;
-                    if ((x - i >= 0 && x - i < 8)
-                        && (y - j >= 0 && y - j < 8))
+                    try
                     {
-                        if (!tiles[x - i, y - j].occupied)
+                        TileStatus tile = tiles[x - i, y - j];
+                        if (tile.checkerPiece == null)
                         {
-                            tiles[x - i, y - j].Select();
-                            selectedTiles.Add(tiles[x - i, y - j]);
+                            tile.Select();
+                            selectedTiles.Add(tile);
+                        }
+                        else if (tile.checkerPiece.Color != piece.Color)
+                        {
+                            TileStatus tileToDelete = tile;
+                            tile = tiles[x - 2 * i, y - 2 * j];
+                            if (tile.checkerPiece == null)
+                            {
+                                tile.Select();
+                                selectedTiles.Add(tile);
+                                checkerSelection.selectedToDelete.Add(tileToDelete);
+                            }
                         }
                     }
+                    catch (IndexOutOfRangeException) { }
                 }
             }
-        }
 
+        }
     }
 }

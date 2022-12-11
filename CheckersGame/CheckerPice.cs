@@ -9,46 +9,49 @@ using System.Windows.Media.Imaging;
 
 namespace CheckersGame
 {
-    internal class CheckerPice
+    internal class CheckerPiece
     {
         internal GridPosition gridPosition;
         internal CheckerColor Color { get => color; }
         private readonly CheckerColor color;
 
-        internal event PiceSelected? onPiceSelected;
-        internal delegate void PiceSelected(CheckerPice thisPice);
+        internal event PieceSelected? onPieceSelected;
+        internal delegate void PieceSelected(CheckerPiece thisPiece);
 
         private readonly CheckerGameManager Manager;
+        internal TileStatus parentTile;
         private Image selectionRing;
+        private Image pieceImage;
 
 
-        public CheckerPice(GridPosition gridPosition, CheckerColor checkerColor, CheckerGameManager manager)
+        public CheckerPiece(GridPosition gridPosition, CheckerColor checkerColor, TileStatus tile, CheckerGameManager manager)
         {
             this.gridPosition = gridPosition;
             Manager = manager;
             color = checkerColor;
+            parentTile = tile;
 
-            // Pice image
-            Image piceImage = new Image();
+            // Piece image
+            pieceImage = new Image();
             BitmapImage bitmapImage;
 
             if (color == CheckerColor.White)
             {
-                bitmapImage = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/Checkers/CheckerPiceWhite.png")));
+                bitmapImage = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/Checkers/CheckerPieceWhite.png")));
             }
             else
             {
-                bitmapImage = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/Checkers/CheckerPiceRed.png")));
+                bitmapImage = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/Checkers/CheckerPieceRed.png")));
             }
-            manager.GameGrid.Children.Add(piceImage);
-            piceImage.SetValue(Grid.ColumnProperty, gridPosition.x);
-            piceImage.SetValue(Grid.RowProperty, gridPosition.y);
-            piceImage.Source = bitmapImage;
-            piceImage.Visibility = System.Windows.Visibility.Visible;
-            piceImage.MouseLeftButtonDown += (s, e) =>
+            manager.GameGrid.Children.Add(pieceImage);
+            pieceImage.SetValue(Grid.ColumnProperty, gridPosition.x);
+            pieceImage.SetValue(Grid.RowProperty, gridPosition.y);
+            pieceImage.Source = bitmapImage;
+            pieceImage.Visibility = System.Windows.Visibility.Visible;
+            pieceImage.MouseLeftButtonDown += (s, e) =>
             {
-                onPiceSelected?.Invoke(this);
                 Select();
+                onPieceSelected?.Invoke(this);
             };
 
             // Selection ring image
@@ -60,9 +63,31 @@ namespace CheckersGame
             selectionRing.Visibility = System.Windows.Visibility.Hidden;
         }
 
-        internal void Select() => selectionRing.Visibility = System.Windows.Visibility.Visible;
-        internal void Unselect() => selectionRing.Visibility = System.Windows.Visibility.Hidden;
+        public void MoveImage(GridPosition gridPosition)
+        {
+            this.gridPosition = gridPosition;
+            parentTile.checkerPiece = null;
 
+            selectionRing.SetValue(Grid.ColumnProperty, gridPosition.x);
+            selectionRing.SetValue(Grid.RowProperty, gridPosition.y);
+            selectionRing.Visibility = System.Windows.Visibility.Collapsed;
+
+            pieceImage.SetValue(Grid.ColumnProperty, gridPosition.x);
+            pieceImage.SetValue(Grid.RowProperty, gridPosition.y);
+        }
+
+        internal void Select() => selectionRing.Visibility = System.Windows.Visibility.Visible;
+        internal void Unselect() => selectionRing.Visibility = System.Windows.Visibility.Collapsed;
+
+        internal void Delete()
+        {
+            selectionRing.Visibility = System.Windows.Visibility.Collapsed;
+            selectionRing.Source = null;
+            pieceImage.Visibility = System.Windows.Visibility.Collapsed;
+            pieceImage.Source = null;
+
+            parentTile.checkerPiece = null;
+        }
     }
 
     internal enum CheckerColor

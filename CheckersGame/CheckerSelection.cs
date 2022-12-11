@@ -9,31 +9,24 @@ namespace CheckersGame
 {
     internal class CheckerSelection
     {
-        internal CheckerPice SelectedPice
+        internal CheckerPiece SelectedPiece
         {
             set
             {
-                selectedPice = value;
-                selectedToDelete.Clear();
+                selectedPiece = value;
             }
             get
             {
-                return selectedPice;
+                return selectedPiece;
             }
         }
-        private CheckerPice selectedPice;
-        internal List<CheckerPice> selectedToDelete = new List<CheckerPice>();
+        private CheckerPiece selectedPiece;
+        internal List<TileStatus> selectedToDelete = new List<TileStatus>();
 
         internal CheckerSelection() { }
-        internal CheckerSelection(CheckerPice selectedPice)
+        internal CheckerSelection(CheckerPiece selectedPiece)
         {
-            SelectedPice = selectedPice;
+            SelectedPiece = selectedPiece;
         }
-
-        internal void DeleteSelectedPices()
-        {
-            throw new NotImplementedException();
-        }
-
     }
 }
