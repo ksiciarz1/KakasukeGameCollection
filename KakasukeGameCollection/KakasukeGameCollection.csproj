@@ -14,6 +14,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<None Update="Resources\CheckersPreview.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
 		<None Update="Resources\SaperPreview.png">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>

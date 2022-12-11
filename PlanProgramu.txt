@@ -19,7 +19,9 @@ Saper:
 	? Double click hover functionality
 
 Checkers:
-	Whole game
+	Promotion movement don't work
+	Win and Lose system
+	Can't skip turn - if you can take a piece you have to
 
 Chess: 
 	Motivate your employees

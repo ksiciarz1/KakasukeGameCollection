@@ -17,5 +17,10 @@
                 <ImageBrush Stretch="UniformToFill"/>
             </Button.Background>
         </Button>
+        <Button x:Name="CheckerButton" Content="Checkers" HorizontalAlignment="Left" Click="CheckerButtonClick" Height="96" Width="172" BorderBrush="Black" BorderThickness="5,5,5,5" VerticalAlignment="Top" Margin="491,116,0,0">
+            <Button.Background>
+                <ImageBrush Stretch="UniformToFill"/>
+            </Button.Background>
+        </Button>
     </Grid>
 </Window>

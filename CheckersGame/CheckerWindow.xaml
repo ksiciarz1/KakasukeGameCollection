@@ -5,10 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CheckersGame"
         mc:Ignorable="d"
-        Title="CheckerWindow" Height="800" Width="800" WindowStyle="None">
+        Title="CheckerWindow" Height="800" Width="800">
     <Grid>
-        <Grid x:Name="BorderGrid" Height="25" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" VerticalAlignment="Top"/>
-        <Viewbox Margin="0,30,0,0">
+        <Viewbox Stretch="Fill">
             <Grid x:Name="GameGrid" Width="800" Height="800">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>

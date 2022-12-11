@@ -9,10 +9,16 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <None Update="Resources\Checkers\CheckerPiceRed.png">
+	  <None Update="Resources\Checkers\CheckerPieceRed.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
-	  <None Update="Resources\Checkers\CheckerPiceWhite.png">
+	  <None Update="Resources\Checkers\CheckerPieceRed.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Resources\Checkers\CheckerPieceWhite.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Resources\Checkers\CheckerPromotion.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Resources\Checkers\SelectionRing.png">
