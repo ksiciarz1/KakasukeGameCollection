@@ -24,7 +24,7 @@ namespace CheckersGame
         private Window parent;
         private CheckerGameManager gameManager;
 
-        public CheckerWindow()
+        private CheckerWindow()
         {
             InitializeComponent();
             MinHeight = 400;
@@ -48,7 +48,7 @@ namespace CheckersGame
 
             gameManager = new CheckerGameManager(this);
 
-        } // HACK
+        }
         public CheckerWindow(Window parent) : this()
         {
             this.parent = parent;

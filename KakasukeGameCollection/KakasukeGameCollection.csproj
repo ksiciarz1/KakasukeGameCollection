@@ -8,12 +8,16 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\AmongSus\AmongSus.csproj" />
 		<ProjectReference Include="..\CheckersGame\CheckersGame.csproj" />
 		<ProjectReference Include="..\SaperGame\SaperGame.csproj" />
 		<ProjectReference Include="..\SnakeGame\SnakeGame.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<None Update="Resources\AmongSusPreview.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
 		<None Update="Resources\CheckersPreview.png">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>

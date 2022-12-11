@@ -80,40 +80,6 @@ namespace SnakeGame
             ScoreLabel.Content = "Score: " + score;
         }
         private void PlayAgainButton_Click(object sender, RoutedEventArgs e) => StartGame();
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (parent != null)
-            {
-                parent.Visibility = Visibility.Visible; // Bring up the main window for game select before closing this window
-                parent.Focus();
-            }
-            Close();
-        }
-        private void FullscreenButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (WindowState == WindowState.Maximized)
-            {
-                WindowState = WindowState.Normal;
-                isFullscreen = false;
-            }
-            else
-            {
-                WindowState = WindowState.Maximized;
-                isFullscreen = true;
-            }
-        }
-        private void MinimizeButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (WindowState == WindowState.Minimized)
-            {
-                if (isFullscreen)
-                    WindowState = WindowState.Maximized;
-                else
-                    WindowState = WindowState.Normal;
-            }
-            else
-                WindowState = WindowState.Minimized;
-        }
         private void OnKeyDownEvent(object sender, KeyEventArgs e)
         {
             if (snake != null)

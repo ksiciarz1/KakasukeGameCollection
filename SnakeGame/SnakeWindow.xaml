@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SnakeGame"
         mc:Ignorable="d"
-        Title="MainWindow" Height="720" Width="720" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" KeyDown="OnKeyDownEvent">
+        Title="MainWindow" Height="720" Width="720" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" KeyDown="OnKeyDownEvent">
     <Grid KeyDown="OnKeyDownEvent">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -20,18 +20,6 @@
             <Button x:Name="PlayAgainButton" Content="Play Again" HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="1" VerticalAlignment="Top" Click="PlayAgainButton_Click"/>
         </Grid>
         <Grid VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" Height="20" KeyDown="OnKeyDownEvent">
-            <Button x:Name="ExitButton" Content="Exit" VerticalAlignment="Center" Width="40" Click="CloseButton_Click" Height="20" Background="#FFDDDDDD" BorderBrush="#FF170202" Margin="680,0,0,0" HorizontalAlignment="Right"/>
-            <Button x:Name="FullscreenButton" Content="Fullscreen" HorizontalAlignment="Right" Margin="0,0,40,0" VerticalAlignment="Top" Click="FullscreenButton_Click" Background="#FFDDDDDD" BorderBrush="#FF170202"/>
-            <Button x:Name="MinimizeButton" Content="Minimize" Margin="0,0,97,0" VerticalAlignment="Center" Click="MinimizeButton_Click" Background="#FFDDDDDD" BorderBrush="#FF170202" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Right" Width="63">
-                <Button.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform ScaleX="1"/>
-                        <SkewTransform/>
-                        <RotateTransform/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Button.RenderTransform>
-            </Button>
             <Label x:Name="ScoreLabel" Content="Score: 0" Margin="322,-3,346,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </Grid>
         <Viewbox Margin="0,20,0,0">

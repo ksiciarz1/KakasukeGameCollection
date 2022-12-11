@@ -5,17 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SaperGame"
         mc:Ignorable="d"
-        Title="MainWindow" ResizeMode="NoResize" WindowStyle="None">
+        Title="MainWindow" ResizeMode="NoResize">
     <Grid>
         <Grid x:Name="ControlGrid" Background="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" Margin="0,0,0,16" Height="25" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="61*"/>
+                <ColumnDefinition Width="37*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="CloseButton" Content="Close" HorizontalAlignment="Right" RenderTransformOrigin="1.026,0.408" Grid.Column="1" Click="CloseButtonClick" Margin="56,0,0,0" Height="25"/>
-            <Button x:Name="TryAgainButton" Content="Try Again" HorizontalAlignment="Left" Margin="100,0,0,0" Click="TryAgainButtonClick"/>
-            <TextBlock x:Name="MinesLeftTextBlock" TextWrapping="Wrap" Text="Mines left: " VerticalAlignment="Center" HorizontalAlignment="Left" Width="109" Height="19"/>
-            <Button x:Name="AdvancedButton" Content="Advanced" Margin="153,0,0,0" HorizontalAlignment="Left" Grid.ColumnSpan="2" Click="AdvancedButtonClick"/>
+            <Button x:Name="TryAgainButton" Content="Try Again" HorizontalAlignment="Right" Margin="76,0,0,0" Click="TryAgainButtonClick" Grid.Column="1" Width="53"/>
+            <TextBlock x:Name="MinesLeftTextBlock" TextWrapping="Wrap" Text="Mines left: " VerticalAlignment="Center" HorizontalAlignment="Center" Width="109" Height="19"/>
+            <Button x:Name="AdvancedButton" Content="Advanced" HorizontalAlignment="Right" Click="AdvancedButtonClick" Grid.Column="1" Width="56" Margin="0,0,55,0"/>
         </Grid>
         <Grid x:Name="MainGameGrid" Margin="0,25,0,16"/>
         <Grid x:Name="GameOverGrid" Background="#FFA0A0A0" Margin="0,25,0,0" Visibility="Hidden" Opacity="0.5">

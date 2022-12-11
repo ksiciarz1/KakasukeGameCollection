@@ -21,13 +21,14 @@ namespace AmongSus
     /// </summary>
     public partial class AmongSusWindow : Window
     {
+        private Window parent;
         private List<Crewmate> crewmates = new List<Crewmate>();
         private bool isRunning = true;
         private Color canvasStartingColor;
         private Color canvasEndingColor;
         private int[] colorDirections = { 1, 1, 1, 1, 1, 1 };
 
-        public AmongSusWindow()
+        private AmongSusWindow()
         {
             InitializeComponent();
             Area.Background = new RadialGradientBrush(Color.FromRgb(100, 100, 100), Color.FromRgb(200, 200, 200));
@@ -39,8 +40,11 @@ namespace AmongSus
             {
                 crewmates.Add(new Crewmate(Area));
             }
-            Show();
             Loop();
+        }
+        public AmongSusWindow(Window parent) : this()
+        {
+            this.parent = parent;
         }
 
         private async void Loop()

@@ -62,15 +62,6 @@ namespace SaperGame
                 saper.Delete();
             StartGame();
         }
-        private void CloseButtonClick(object sender, RoutedEventArgs e)
-        {
-            if (parent != null)
-            {
-                parent.Visibility = Visibility.Visible;
-                parent.Focus();
-            }
-            Close();
-        }
         private void AdvancedButtonClick(object sender, RoutedEventArgs e)
         {
             if (advancedStart == null)
