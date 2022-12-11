@@ -18,6 +18,9 @@
 	  <None Update="Resources\Checkers\CheckerPieceWhite.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="Resources\Checkers\CheckerPromotion.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Resources\Checkers\SelectionRing.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>

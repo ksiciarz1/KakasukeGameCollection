@@ -19,11 +19,9 @@ Saper:
 	? Double click hover functionality
 
 Checkers:
-	Turn System
-	Promotion System
-	Pieces shouldn't be able to move backwards
+	Promotion movement don't work
 	Win and Lose system
-	Taking one piece when multiple are availbe will delete all 
+	Can't skip turn - if you can take a piece you have to
 
 Chess: 
 	Motivate your employees

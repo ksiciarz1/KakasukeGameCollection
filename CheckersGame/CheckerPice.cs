@@ -23,6 +23,7 @@ namespace CheckersGame
         internal TileStatus parentTile;
         private Image selectionRing;
         private Image pieceImage;
+        private Image promotionImage;
         internal bool selected = false;
 
         public CheckerPiece(GridPosition gridPosition, CheckerColor checkerColor, TileStatus tile, CheckerGameManager manager)
@@ -55,6 +56,14 @@ namespace CheckersGame
             selectionRing.SetValue(Grid.ColumnProperty, gridPosition.x);
             selectionRing.SetValue(Grid.RowProperty, gridPosition.y);
             selectionRing.Visibility = System.Windows.Visibility.Hidden;
+
+            // Promotion image
+            promotionImage = new Image();
+            promotionImage.Source = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/Checkers/CheckerPromotion.png")));
+            manager.GameGrid.Children.Add(promotionImage);
+            promotionImage.SetValue(Grid.ColumnProperty, gridPosition.x);
+            promotionImage.SetValue(Grid.RowProperty, gridPosition.y);
+            promotionImage.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         public void MoveImage(GridPosition gridPosition)
@@ -62,12 +71,25 @@ namespace CheckersGame
             this.gridPosition = gridPosition;
             parentTile.checkerPiece = null;
 
+            Unselect();
             selectionRing.SetValue(Grid.ColumnProperty, gridPosition.x);
             selectionRing.SetValue(Grid.RowProperty, gridPosition.y);
-            Unselect();
 
             pieceImage.SetValue(Grid.ColumnProperty, gridPosition.x);
             pieceImage.SetValue(Grid.RowProperty, gridPosition.y);
+
+            promotionImage.SetValue(Grid.ColumnProperty, gridPosition.x);
+            promotionImage.SetValue(Grid.RowProperty, gridPosition.y);
+
+            if (Color == CheckerColor.White && gridPosition.y == 7
+                || Color == CheckerColor.Red && gridPosition.y == 0)
+                Promote();
+        }
+
+        private void Promote()
+        {
+            promoted = true;
+            promotionImage.Visibility = System.Windows.Visibility.Visible;
         }
 
         internal void Select()
