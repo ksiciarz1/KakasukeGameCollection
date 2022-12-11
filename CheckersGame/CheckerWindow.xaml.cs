@@ -32,7 +32,6 @@ namespace CheckersGame
 
             // setting up the board
             for (int i = 0; i < 8; i++)
-            {
                 for (int j = 0; j < 8; j++)
                 {
                     Rectangle rectangle = new Rectangle();
@@ -45,27 +44,25 @@ namespace CheckersGame
                     rectangle.SetValue(Grid.ColumnProperty, i);
                     rectangle.SetValue(Grid.RowProperty, j);
                     rectangle.Visibility = Visibility.Visible;
-                    rectangle.MouseLeftButtonDown += (s, e) =>
-                    {
-                        //gameManager.TileSelected(new GridPosition(i, j));
-                    };
                 }
-            }
+
             gameManager = new CheckerGameManager(this);
 
-        }
+        } // HACK
         public CheckerWindow(Window parent) : this()
         {
             this.parent = parent;
         }
 
-
+        public void NewGame()
+        {
+            gameManager = new CheckerGameManager(this);
+        }
 
         protected override void OnClosed(EventArgs e)
         {
+            parent?.Focus();
             base.OnClosed(e);
-            if (parent != null)
-                parent.Focus();
         }
     }
 }

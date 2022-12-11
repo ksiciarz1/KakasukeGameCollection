@@ -23,6 +23,7 @@ Checkers:
 	Promotion System
 	Pieces shouldn't be able to move backwards
 	Win and Lose system
+	Taking one piece when multiple are availbe will delete all 
 
 Chess: 
 	Motivate your employees

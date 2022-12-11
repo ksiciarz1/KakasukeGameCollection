@@ -13,21 +13,21 @@ namespace CheckersGame
     {
         internal GridPosition gridPosition;
         internal CheckerColor Color { get => color; }
+        public bool promoted = false;
+
         private readonly CheckerColor color;
 
         internal event PieceSelected? onPieceSelected;
         internal delegate void PieceSelected(CheckerPiece thisPiece);
 
-        private readonly CheckerGameManager Manager;
         internal TileStatus parentTile;
         private Image selectionRing;
         private Image pieceImage;
-
+        internal bool selected = false;
 
         public CheckerPiece(GridPosition gridPosition, CheckerColor checkerColor, TileStatus tile, CheckerGameManager manager)
         {
             this.gridPosition = gridPosition;
-            Manager = manager;
             color = checkerColor;
             parentTile = tile;
 
@@ -36,23 +36,17 @@ namespace CheckersGame
             BitmapImage bitmapImage;
 
             if (color == CheckerColor.White)
-            {
                 bitmapImage = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/Checkers/CheckerPieceWhite.png")));
-            }
+
             else
-            {
                 bitmapImage = new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/Checkers/CheckerPieceRed.png")));
-            }
+
             manager.GameGrid.Children.Add(pieceImage);
             pieceImage.SetValue(Grid.ColumnProperty, gridPosition.x);
             pieceImage.SetValue(Grid.RowProperty, gridPosition.y);
             pieceImage.Source = bitmapImage;
             pieceImage.Visibility = System.Windows.Visibility.Visible;
-            pieceImage.MouseLeftButtonDown += (s, e) =>
-            {
-                Select();
-                onPieceSelected?.Invoke(this);
-            };
+            pieceImage.MouseLeftButtonDown += (s, e) => onPieceSelected?.Invoke(this);
 
             // Selection ring image
             selectionRing = new Image();
@@ -70,14 +64,22 @@ namespace CheckersGame
 
             selectionRing.SetValue(Grid.ColumnProperty, gridPosition.x);
             selectionRing.SetValue(Grid.RowProperty, gridPosition.y);
-            selectionRing.Visibility = System.Windows.Visibility.Collapsed;
+            Unselect();
 
             pieceImage.SetValue(Grid.ColumnProperty, gridPosition.x);
             pieceImage.SetValue(Grid.RowProperty, gridPosition.y);
         }
 
-        internal void Select() => selectionRing.Visibility = System.Windows.Visibility.Visible;
-        internal void Unselect() => selectionRing.Visibility = System.Windows.Visibility.Collapsed;
+        internal void Select()
+        {
+            selectionRing.Visibility = System.Windows.Visibility.Visible;
+            selected = true;
+        }
+        internal void Unselect()
+        {
+            selectionRing.Visibility = System.Windows.Visibility.Collapsed;
+            selected = false;
+        }
 
         internal void Delete()
         {

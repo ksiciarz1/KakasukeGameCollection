@@ -21,14 +21,13 @@ namespace KakasukeGameCollection
     public partial class MainWindow : Window
     {
         private Window? gameWindow;
-        // private SaperGame.MainWindow? SapperGameWindow;
-        // private ChessGame.MainWindow? ChessGameWindow;
 
         public MainWindow()
         {
             InitializeComponent();
             SnakeButton.Background = new ImageBrush(new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/SnakePreview.png"))));
             SaperButton.Background = new ImageBrush(new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/SaperPreview.png"))));
+            CheckerButton.Background = new ImageBrush(new BitmapImage(new Uri(Path.GetFullPath(@"./Resources/CheckersPreview.png"))));
         }
 
         private void SnakeButtonClick(object sender, RoutedEventArgs e)
@@ -52,6 +51,16 @@ namespace KakasukeGameCollection
         private void GameWindowClosed(object? sender, EventArgs e)
         {
             gameWindow = null;
+        }
+
+        private void CheckerButtonClick(object sender, RoutedEventArgs e)
+        {
+            if(gameWindow == null)
+            {
+                gameWindow = new CheckersGame.CheckerWindow(this);
+                gameWindow.Closed += GameWindowClosed;
+                gameWindow.ShowDialog();
+            }
         }
     }
 }

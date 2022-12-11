@@ -49,11 +49,6 @@ namespace CheckersGame
             piece.MoveImage(gridPosition);
             checkerPiece = piece;
         }
-        public void RemovePiece()
-        {
-            checkerPiece?.Delete();
-            checkerPiece = null;
-        }
 
         internal void Select()
         {
@@ -62,6 +57,13 @@ namespace CheckersGame
         internal void Unselect()
         {
             selectionImage.Visibility = System.Windows.Visibility.Hidden;
+        }
+
+        internal void Delete()
+        {
+            checkerPiece?.Delete();
+            selectionImage.Source = null;
+            selectionImage.Visibility = System.Windows.Visibility.Collapsed;
         }
     }
 }

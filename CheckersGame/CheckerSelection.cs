@@ -9,7 +9,8 @@ namespace CheckersGame
 {
     internal class CheckerSelection
     {
-        internal CheckerPiece SelectedPiece
+        private CheckerPiece? selectedPiece;
+        internal CheckerPiece? SelectedPiece
         {
             set
             {
@@ -20,13 +21,15 @@ namespace CheckersGame
                 return selectedPiece;
             }
         }
-        private CheckerPiece selectedPiece;
         internal List<TileStatus> selectedToDelete = new List<TileStatus>();
 
         internal CheckerSelection() { }
-        internal CheckerSelection(CheckerPiece selectedPiece)
+
+        internal void SelectPiece(CheckerPiece piece)
         {
-            SelectedPiece = selectedPiece;
+            SelectedPiece?.Unselect();
+            selectedToDelete.Clear();
+            SelectedPiece = piece;
         }
     }
 }
