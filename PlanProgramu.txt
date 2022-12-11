@@ -19,7 +19,10 @@ Saper:
 	? Double click hover functionality
 
 Checkers:
-	Whole game
+	Turn System
+	Promotion System
+	Pieces shouldn't be able to move backwards
+	Win and Lose system
 
 Chess: 
 	Motivate your employees
